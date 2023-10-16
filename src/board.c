@@ -2,22 +2,13 @@
 #include "random.h"
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdlib.h>
 
-void init_board(struct Board *b, uint8_t height, uint8_t width) {
-  b->height = height;
-  b->width = width;
+void init_board(struct Board *b) {
   b->failed = false;
-  b->state = (enum CellState **)malloc(height * sizeof(enum CellState *));
-  b->number = (uint8_t **)malloc(height * sizeof(uint8_t *));
-  b->mine = (bool **)malloc(height * sizeof(bool *));
-
-  for (int i = 0; i < height; ++i) {
-    b->state[i] = (enum CellState *)malloc(height * sizeof(enum CellState));
-    b->number[i] = (uint8_t *)malloc(height * sizeof(uint8_t));
-    b->mine[i] = (bool *)malloc(height * sizeof(bool));
-
-    for (int j = 0; j < width; ++j) {
+  b->height = HEIGHT;
+  b->width = WIDTH;
+  for (int i = 0; i < b->height; ++i) {
+    for (int j = 0; j < b->width; ++j) {
       b->state[i][j] = kUnopen;
       b->number[i][j] = 0;
       b->mine[i][j] = false;
@@ -38,17 +29,6 @@ void clear_board(struct Board *b) {
   }
   b->x = 0;
   b->y = 0;
-}
-
-void drop_board(struct Board *b) {
-  for (int i = 0; i < b->height; ++i) {
-    free(b->state[i]);
-    free(b->number[i]);
-    free(b->mine[i]);
-  }
-  free(b->state);
-  free(b->number);
-  free(b->mine);
 }
 
 void generate_mine(struct Board *b, int mine_num) {
