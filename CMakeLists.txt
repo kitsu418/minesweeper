@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.20)
+project(minesweeper)
+
+set(CMAKE_C_COMPTLER CLANG)
+include_directories(${PROJECT_SOURCE_DIR}/include)
+aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC_LIST)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build)
+add_executable(minesweeper ${SRC_LIST})
+target_compile_options(minesweeper PUBLIC -Wall -Wshadow -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined)
+target_link_options(minesweeper PUBLIC -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined)
+target_compile_definitions(minesweeper PUBLIC NORMAL)

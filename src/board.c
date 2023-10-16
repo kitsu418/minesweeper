@@ -52,8 +52,6 @@ void drop_board(struct Board *b) {
 }
 
 void generate_mine(struct Board *b, int mine_num) {
-  // a magic number...
-  uint32_t state = 114514;
   uint8_t x;
   uint8_t y;
   while (mine_num--) {
