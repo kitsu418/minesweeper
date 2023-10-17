@@ -13,22 +13,25 @@ static int get_color(enum ColorType color) {
   switch (color) {
   case kBackgroundColor:
     return COLOR_BACKGROUND;
-  case kDigitSegmentColor:
-    return COLOR_CYAN;
   case kBoomCellBackgroundColor:
-    return COLOR_RED;
+    return COLOR_BOOM_BACKGROUND;
   case kTitleColor:
-    return COLOR_CYAN;
+    return COLOR_TITLE;
   case kFlagColor:
-    return COLOR_RED;
+    return COLOR_FLAG;
   case kFlagpoleColor:
-    return COLOR_BLACK;
+    return COLOR_FLAGPOLE;
   case kFrameColor:
-    return COLOR_BLACK;
+    return COLOR_FRAME;
   case kCursorColor:
-    return COLOR_ORANGE;
+    return COLOR_CURSOR;
   case kBlankCellColor:
-    return COLOR_GRAY;
+  case kOpenedBackgroundColor:
+    return COLOR_OPENED;
+  case kUnopenedBackgroundColor:
+    return COLOR_UNOPENED;
+  case kCharacterColor:
+    return COLOR_CHARACTER;
   }
   return -1;
 }

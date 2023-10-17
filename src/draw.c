@@ -6,7 +6,8 @@
 
 void draw_digit(int x, int y, int number, enum ColorType color) {
   number %= 10;
-  draw_character(x + DIGIT_TOP_MARGIN, y + DIGIT_LEFT_MARGIN, number + '0', color);
+  draw_character(x + DIGIT_TOP_MARGIN, y + DIGIT_LEFT_MARGIN, number + '0',
+                 color);
 }
 
 void draw_cell_frame(int x, int y, enum ColorType color) {
@@ -60,25 +61,29 @@ void draw_board(struct Board *b) {
     for (uint8_t j = 0; j < b->width; ++j) {
       int x = BOARD_TOP_MARGIN + i * CELL_HEIGHT;
       int y = BOARD_LEFT_MARGIN + j * CELL_WIDTH;
-      draw_cell_background(x, y, kBackgroundColor);
-      draw_cell_frame(x, y,
-                      (b->x == i && b->y == j) ? kCursorColor : kFrameColor);
       switch (b->state[i][j]) {
       case kUnopen:
+        draw_cell_background(x, y, kUnopenedBackgroundColor);
         break;
       case kNumbered:
-        draw_digit(x, y, b->number[i][j], kDigitSegmentColor);
+        draw_cell_background(x, y, kOpenedBackgroundColor);
+        draw_digit(x, y, b->number[i][j], kCharacterColor);
         break;
       case kBlank:
+        draw_cell_background(x, y, kOpenedBackgroundColor);
         draw_blank_cell(x, y, kBlankCellColor);
         break;
       case kFlagged:
+        draw_cell_background(x, y, kUnopenedBackgroundColor);
         draw_flag(x, y);
         break;
       case kMine:
+        draw_cell_background(x, y, kBoomCellBackgroundColor);
         draw_mine(x, y);
         break;
       }
+      draw_cell_frame(x, y,
+                      (b->x == i && b->y == j) ? kCursorColor : kFrameColor);
     }
   }
   graphics_sync();

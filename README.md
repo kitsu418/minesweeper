@@ -30,7 +30,7 @@ cd build && make
 ## TODO
 - [ ] **[TOP PRIORITY]** Fix memory leaks!!!
 - [ ] Support receiving inputs from PS2 keyboard (on self-made RISC-V CPU).
-- [ ] Optimize the color scheme to make the UI more beautiful.
+- [x] Optimize the color scheme to make the UI more beautiful.
 - [ ] Support mouse for x86 machines.
 - [ ] Add a window containing some information about the game.
 - [ ] Add a message bar to guide players.
@@ -38,3 +38,4 @@ cd build && make
 
 ## Acknowledgement
 Some of the implementation details were inspired by Wenzhuo Liu's selfless sharing in the past, thanks to him.
+Color scheme is designed by Eigensystem.
