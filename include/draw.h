@@ -9,11 +9,11 @@
 #define BOARD_TOP_MARGIN 48
 #define BOARD_LEFT_MARGIN 128
 #define TITLE_TOP_MARGIN 24
-#define TITLE_LEFT_MARGIN 176
+#define TITLE_LEFT_MARGIN 224
 
 #define DIGIT_SEGMENT_WIDTH 2
-#define DIGIT_TOP_MARGIN 4
-#define DIGIT_LEFT_MARGIN 7
+#define DIGIT_TOP_MARGIN 5
+#define DIGIT_LEFT_MARGIN 4
 #define DIGIT_HORIZONTAL_LENGTH 10
 #define DIGIT_VERTICAL_LENGTH 16
 #define DIGIT_VERTICAL_LENGTH_HALF 8
@@ -43,5 +43,6 @@ void draw_cell_background(int x, int y, enum ColorType color);
 void draw_flag(int x, int y);
 void draw_title(int x, int y, enum ColorType color);
 void draw_character(int x, int y, char c, enum ColorType color);
+void draw_string(int x, int y, char str[], int length, enum ColorType color);
 void draw_mine(int x, int y);
 void draw_blank_cell(int x, int y, enum ColorType color);
