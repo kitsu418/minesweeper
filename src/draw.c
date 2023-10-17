@@ -57,8 +57,6 @@ void draw_digit_segment(int x, int y, int segment, enum ColorType color) {
 
 void draw_digit(int x, int y, int number, enum ColorType color) {
   number %= 10;
-  graphics_fill_rectangle(x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH,
-                          CELL_HEIGHT, color);
   switch (number) {
   case 0:
     draw_digit_segment(x, y, 1, color);
@@ -172,6 +170,142 @@ void draw_title(int x, int y, enum ColorType color) {
                  color);
 }
 
-void draw_character(int x, int y, char c, enum ColorType color) {}
+void draw_character(int x, int y, char c, enum ColorType color) {
+  switch (c) {
+  case 'A':
+    break;
+  case 'B':
+    break;
+  case 'C':
+    break;
+  case 'D':
+    break;
+  case 'E':
+    //  ------
+    // |
+    // |------
+    // |
+    //  ------
+    graphics_draw_line(x + 2, y + 2, x + 22, y + 2, color);
+    graphics_draw_line(x + 2, y + 2, x + 2, y + 22, color);
+    graphics_draw_line(x + 12, y + 2, x + 12, y + 22, color);
+    graphics_draw_line(x + 22, y + 2, x + 22, y + 22, color);
+    break;
+  case 'F':
+    break;
+  case 'G':
+    break;
+  case 'H':
+    break;
+  case 'I':
+    // ---
+    //  |
+    //  |
+    //  |
+    // ---
+    graphics_draw_line(x + 2, y + 7, x + 2, y + 17, color);
+    graphics_draw_line(x + 2, y + 12, x + 22, y + 12, color);
+    graphics_draw_line(x + 22, y + 7, x + 22, y + 17, color);
+    break;
+  case 'J':
+    break;
+  case 'K':
+    break;
+  case 'L':
+    break;
+  case 'M':
+    // |\    /|
+    // | \  / |
+    // |  \/  |
+    graphics_draw_line(x + 2, y + 2, x + 22, y + 2, color);
+    graphics_draw_line(x + 2, y + 2, x + 22, y + 12, color);
+    graphics_draw_line(x + 2, y + 22, x + 22, y + 12, color);
+    graphics_draw_line(x + 2, y + 22, x + 22, y + 22, color);
+    break;
+  case 'N':
+    // |\_   |
+    // |  \_ |
+    // |    \|
+    graphics_draw_line(x + 2, y + 2, x + 22, y + 2, color);
+    graphics_draw_line(x + 2, y + 2, x + 22, y + 22, color);
+    graphics_draw_line(x + 2, y + 22, x + 22, y + 22, color);
+    break;
+  case 'O':
+    break;
+  case 'P':
+    //  ------
+    // |      |
+    // |------
+    // |
+    // |
+    graphics_draw_line(x + 2, y + 2, x + 22, y + 2, color);
+    graphics_draw_line(x + 2, y + 2, x + 2, y + 22, color);
+    graphics_draw_line(x + 12, y + 2, x + 12, y + 22, color);
+    graphics_draw_line(x + 2, y + 22, x + 12, y + 22, color);
+    break;
+  case 'Q':
+    break;
+  case 'R':
+    //  ------
+    // |      |
+    // |------
+    // |\_
+    // |  \_
+    // |    \_
+    graphics_draw_line(x + 2, y + 2, x + 22, y + 2, color);
+    graphics_draw_line(x + 2, y + 2, x + 2, y + 22, color);
+    graphics_draw_line(x + 12, y + 2, x + 12, y + 22, color);
+    graphics_draw_line(x + 2, y + 22, x + 12, y + 22, color);
+    graphics_draw_line(x + 12, y + 2, x + 22, y + 22, color);
+    break;
+  case 'S':
+    //  ------
+    // |
+    //  ------
+    //        |
+    //  ------
+    graphics_draw_line(x + 2, y + 2, x + 12, y + 2, color);
+    graphics_draw_line(x + 12, y + 22, x + 22, y + 22, color);
+    graphics_draw_line(x + 2, y + 2, x + 2, y + 22, color);
+    graphics_draw_line(x + 12, y + 2, x + 12, y + 22, color);
+    graphics_draw_line(x + 22, y + 2, x + 22, y + 22, color);
+    break;
+  case 'T':
+    break;
+  case 'U':
+    break;
+  case 'V':
+    break;
+  case 'W':
+    // |  /\  |
+    // | /  \ |
+    // |/    \|
+    graphics_draw_line(x + 2, y + 2, x + 22, y + 2, color);
+    graphics_draw_line(x + 22, y + 2, x + 2, y + 12, color);
+    graphics_draw_line(x + 22, y + 22, x + 2, y + 12, color);
+    graphics_draw_line(x + 2, y + 22, x + 22, y + 22, color);
+    break;
+  case 'X':
+    break;
+  case 'Y':
+    break;
+  case 'Z':
+    break;
+  case '!':
+    //  -
+    // | |
+    // | |
+    // | |
+    // | |
+    //  -
+    //
+    //  -
+    // | |
+    //  -
+    graphics_draw_line(x + 2, y + 12, x + 18, y + 12, color);
+    graphics_draw_line(x + 20, y + 12, x + 22, y + 12, color);
+    break;
+  }
+}
 
 void draw_mine(int x, int y);
