@@ -1,8 +1,10 @@
 #pragma once
 
 enum ColorType {
-  kBackground,
-  kDigitSegment,
-  kBoomCellBackground,
-  kTitle,
+  kBackgroundColor,
+  kDigitSegmentColor,
+  kBoomCellBackgroundColor,
+  kTitleColor,
+  kFlagColor,
+  kFlagpoleColor
 };

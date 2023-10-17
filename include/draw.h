@@ -18,6 +18,15 @@
 #define DIGIT_VERTICAL_LENGTH 16
 #define DIGIT_VERTICAL_LENGTH_HALF 8
 
+#define FLAGPOLE_TOP_MARGIN 4
+#define FLAGPOLE_LEFT_MARGIN 6
+#define FLAGPOLE_HEIGHT 16
+#define FLAGPOLE_WIDTH 2
+#define FLAG_TOP_MARGIN 4
+#define FLAG_LEFT_MARGIN (FLAGPOLE_LEFT_MARGIN + FLAGPOLE_WIDTH)
+#define FLAG_HEIGHT 6
+#define FLAG_WIDTH 10
+
 enum CellType {
   kEmpty,
   kDigit,
@@ -29,3 +38,9 @@ enum CellType {
 void draw_board(struct Board *b);
 void draw_digit(int x, int y, int number, enum ColorType color);
 void draw_digit_segment(int x, int y, int segment, enum ColorType color);
+void draw_cell_frame(int x, int y, enum ColorType color);
+void draw_cell_background(int x, int y, enum ColorType color);
+void draw_flag(int x, int y);
+void draw_title(int x, int y, enum ColorType color);
+void draw_character(int x, int y, char c, enum ColorType color);
+void draw_mine(int x, int y);

@@ -131,3 +131,47 @@ void draw_digit(int x, int y, int number, enum ColorType color) {
     break;
   }
 }
+
+void draw_cell_frame(int x, int y, enum ColorType color) {
+  graphics_draw_rectangle(x, y, CELL_WIDTH, CELL_HEIGHT, color);
+}
+
+void draw_cell_background(int x, int y, enum ColorType color) {
+  graphics_fill_rectangle(x, y, CELL_WIDTH, CELL_HEIGHT, color);
+}
+
+void draw_flag(int x, int y) {
+  graphics_fill_rectangle(x + FLAGPOLE_TOP_MARGIN, y + FLAGPOLE_LEFT_MARGIN,
+                          FLAGPOLE_WIDTH, FLAGPOLE_HEIGHT, kFlagpoleColor);
+  graphics_fill_rectangle(x + FLAG_TOP_MARGIN, y + FLAG_LEFT_MARGIN, FLAG_WIDTH,
+                          FLAG_HEIGHT, kFlagColor);
+}
+
+void draw_title(int x, int y, enum ColorType color) {
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN, 'M', color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + CELL_WIDTH, 'I', color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 2 * CELL_WIDTH, 'N',
+                 color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 3 * CELL_WIDTH, 'E',
+                 color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 4 * CELL_WIDTH, 'S',
+                 color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 5 * CELL_WIDTH, 'W',
+                 color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 6 * CELL_WIDTH, 'E',
+                 color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 7 * CELL_WIDTH, 'E',
+                 color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 8 * CELL_WIDTH, 'P',
+                 color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 9 * CELL_WIDTH, 'E',
+                 color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 10 * CELL_WIDTH, 'R',
+                 color);
+  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 11 * CELL_WIDTH, '!',
+                 color);
+}
+
+void draw_character(int x, int y, char c, enum ColorType color) {}
+
+void draw_mine(int x, int y);
