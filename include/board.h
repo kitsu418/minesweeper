@@ -33,10 +33,6 @@ struct Board {
   uint8_t y;
 };
 
-static inline bool check_in_board(struct Board *b, uint8_t x, uint8_t y) {
-  return (x < b->height) && (y < b->width);
-}
-
 void init_board(struct Board *b);
 void clear_board(struct Board *b);
 void drop_board(struct Board *b);
@@ -45,8 +41,8 @@ void move_cursor_up(struct Board *b);
 void move_cursor_down(struct Board *b);
 void move_cursor_left(struct Board *b);
 void move_cursor_right(struct Board *b);
-void first_click_with_mine(struct Board *b, uint8_t x, uint8_t y);
+void first_click_with_mine(struct Board *b, int x, int y);
 void flag_cell(struct Board *b);
 void click_cell(struct Board *b);
-void uncover_cell(struct Board *b, uint8_t x, uint8_t y);
-uint8_t count_surrounding_mines(struct Board *b, uint8_t x, uint8_t y);
+void uncover_cell(struct Board *b, int x, int y);
+uint8_t count_surrounding_mines(struct Board *b, int x, int y);

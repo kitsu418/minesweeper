@@ -44,3 +44,4 @@ void draw_flag(int x, int y);
 void draw_title(int x, int y, enum ColorType color);
 void draw_character(int x, int y, char c, enum ColorType color);
 void draw_mine(int x, int y);
+void draw_blank_cell(int x, int y, enum ColorType color);

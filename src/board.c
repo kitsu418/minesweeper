@@ -2,6 +2,11 @@
 #include "random.h"
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
+
+static inline bool check_in_board(struct Board *b, int x, int y) {
+  return (x < b->height && x >= 0) && (y < b->width && y >= 0);
+}
 
 void init_board(struct Board *b) {
   b->failed = false;
@@ -69,7 +74,7 @@ void move_cursor_right(struct Board *b) {
   }
 }
 
-void first_click_with_mine(struct Board *b, uint8_t x, uint8_t y) {
+void first_click_with_mine(struct Board *b, int x, int y) {
   for (uint8_t i = 0; i < b->height; ++i) {
     for (uint8_t j = 0; j < b->width; ++j) {
       if (b->mine[i][j] == false && i != x && j != y) {
@@ -100,7 +105,7 @@ void click_cell(struct Board *b) {
   }
 }
 
-void uncover_cell(struct Board *b, uint8_t x, uint8_t y) {
+void uncover_cell(struct Board *b, int x, int y) {
   if (check_in_board(b, x, y) == false) {
     return;
   }
@@ -108,28 +113,29 @@ void uncover_cell(struct Board *b, uint8_t x, uint8_t y) {
     return;
   }
   if (b->mine[x][y] == true) {
-    return ;
+    return;
   } else {
-    b->number[b->x][b->y] = count_surrounding_mines(b, x, y);
-    if (b->number[b->x][b->y] == 0) {
-      b->state[b->x][b->y] = kBlank;
+    b->number[x][y] = count_surrounding_mines(b, x, y);
+    printf("%d %d %d\n", x, y, b->number[x][y]);
+    if (b->number[x][y] == 0) {
+      b->state[x][y] = kBlank;
       uncover_cell(b, x + 1, y);
       uncover_cell(b, x, y + 1);
       uncover_cell(b, x - 1, y);
       uncover_cell(b, x, y - 1);
     } else {
-      b->state[b->x][b->y] = kNumbered;
+      b->state[x][y] = kNumbered;
     }
   }
 }
 
-const uint8_t dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
-const uint8_t dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+const int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+const int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
-uint8_t count_surrounding_mines(struct Board *b, uint8_t x, uint8_t y) {
+uint8_t count_surrounding_mines(struct Board *b, int x, int y) {
   uint8_t val = 0;
   for (int i = 0; i < 8; ++i) {
-    if (check_in_board(b, x + dx[i], y + dy[i])) {
+    if (check_in_board(b, x + dx[i], y + dy[i]) == true) {
       val += b->mine[x + dx[i]][y + dy[i]] == true ? 1 : 0;
     }
   }

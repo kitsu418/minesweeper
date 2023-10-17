@@ -1,5 +1,7 @@
 #include "draw.h"
+#include "color.h"
 #include "graphics.h"
+#include <stdint.h>
 
 // x and y are locations of the cell's upper left corner
 //       1
@@ -146,28 +148,18 @@ void draw_flag(int x, int y) {
 }
 
 void draw_title(int x, int y, enum ColorType color) {
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN, 'M', color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + CELL_WIDTH, 'I', color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 2 * CELL_WIDTH, 'N',
-                 color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 3 * CELL_WIDTH, 'E',
-                 color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 4 * CELL_WIDTH, 'S',
-                 color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 5 * CELL_WIDTH, 'W',
-                 color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 6 * CELL_WIDTH, 'E',
-                 color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 7 * CELL_WIDTH, 'E',
-                 color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 8 * CELL_WIDTH, 'P',
-                 color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 9 * CELL_WIDTH, 'E',
-                 color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 10 * CELL_WIDTH, 'R',
-                 color);
-  draw_character(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN + 11 * CELL_WIDTH, '!',
-                 color);
+  draw_character(x, y, 'M', color);
+  draw_character(x, y + CELL_WIDTH, 'I', color);
+  draw_character(x, y + 2 * CELL_WIDTH, 'N', color);
+  draw_character(x, y + 3 * CELL_WIDTH, 'E', color);
+  draw_character(x, y + 4 * CELL_WIDTH, 'S', color);
+  draw_character(x, y + 5 * CELL_WIDTH, 'W', color);
+  draw_character(x, y + 6 * CELL_WIDTH, 'E', color);
+  draw_character(x, y + 7 * CELL_WIDTH, 'E', color);
+  draw_character(x, y + 8 * CELL_WIDTH, 'P', color);
+  draw_character(x, y + 9 * CELL_WIDTH, 'E', color);
+  draw_character(x, y + 10 * CELL_WIDTH, 'R', color);
+  draw_character(x, y + 11 * CELL_WIDTH, '!', color);
 }
 
 void draw_character(int x, int y, char c, enum ColorType color) {
@@ -308,4 +300,39 @@ void draw_character(int x, int y, char c, enum ColorType color) {
   }
 }
 
-void draw_mine(int x, int y);
+void draw_mine(int x, int y) {
+  draw_character(x, y, 'M', kTitleColor);
+}
+
+void draw_blank_cell(int x, int y, enum ColorType color) {
+  graphics_fill_rectangle(x + 1, y + 1, CELL_WIDTH - 2, CELL_HEIGHT - 2, kBlankCellColor);
+}
+
+void draw_board(struct Board *b) {
+  draw_title(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN, kTitleColor);
+  for (uint8_t i = 0; i < b->height; ++i) {
+    for (uint8_t j = 0; j < b->width; ++j) {
+      int x = BOARD_TOP_MARGIN + i * CELL_HEIGHT;
+      int y = BOARD_LEFT_MARGIN + j * CELL_WIDTH;
+      draw_cell_background(x, y, kBackgroundColor);
+      draw_cell_frame(x, y, (b->x == i && b->y == j) ? kCursorColor : kFrameColor);
+      switch (b->state[i][j]) {
+      case kUnopen:
+        break;
+      case kNumbered:
+        draw_digit(x, y, b->number[i][j], kDigitSegmentColor);
+        break;
+      case kBlank:
+        draw_blank_cell(x, y, kBlankCellColor);
+        break;
+      case kFlagged:
+        draw_flag(x, y);
+        break;
+      case kMine:
+        draw_mine(x, y);
+        break;
+      }
+    }
+  }
+  graphics_sync();
+}

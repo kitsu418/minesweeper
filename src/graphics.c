@@ -7,8 +7,7 @@
 
 #ifndef RISCV
 #include "sdl_interface.h"
-
-uint8_t vmem[DISPLAY_SIZE];
+uint8_t vram_mem[DISPLAY_SIZE];
 #endif
 
 void graphics_sync() {
@@ -19,9 +18,10 @@ void graphics_sync() {
 #endif
 }
 
-void graphics_init(int x, int y) {
+void graphics_init() {
 #ifndef RISCV
   sdl_init();
+  vram = (uint8_t *) vram_mem;
 #endif
   for (int i = 0; i < DISPLAY_HEIGHT; ++i) {
     for (int j = 0; j < DISPLAY_WIDTH; ++j) {

@@ -6,5 +6,8 @@ enum ColorType {
   kBoomCellBackgroundColor,
   kTitleColor,
   kFlagColor,
-  kFlagpoleColor
+  kFlagpoleColor,
+  kFrameColor,
+  kBlankCellColor,
+  kCursorColor,
 };
