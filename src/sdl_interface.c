@@ -38,6 +38,44 @@ static uint32_t get_color(enum ColorType color) {
     return COLOR_MINE;
   case kMessageColor:
     return COLOR_MESSAGE;
+  case kSanaeColor0:
+    return COLOR_SANAE_0;
+  case kSanaeColor1:
+    return COLOR_SANAE_1;
+  case kSanaeColor2:
+    return COLOR_SANAE_2;
+  case kSanaeColor3:
+    return COLOR_SANAE_3;
+  case kSanaeColor4:
+    return COLOR_SANAE_4;
+  case kSanaeColor5:
+    return COLOR_SANAE_5;
+  case kSanaeColor6:
+    return COLOR_SANAE_6;
+  case kSanaeColor7:
+    return COLOR_SANAE_7;
+  case kSanaeColor8:
+    return COLOR_SANAE_8;
+  case kSanaeColor9:
+    return COLOR_SANAE_9;
+  case kSanaeColor10:
+    return COLOR_SANAE_10;
+  case kSanaeColor11:
+    return COLOR_SANAE_11;
+  case kSanaeColor12:
+    return COLOR_SANAE_12;
+  case kSanaeColor13:
+    return COLOR_SANAE_13;
+  case kSanaeColor14:
+    return COLOR_SANAE_14;
+  case kSanaeColor15:
+    return COLOR_SANAE_15;
+  case kSanaeColor16:
+    return COLOR_SANAE_16;
+  case kSanaeColor17:
+    return COLOR_SANAE_17;
+  case kSanaeColor18:
+    return COLOR_SANAE_18;
   }
   return -1;
 }

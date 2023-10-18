@@ -2,6 +2,7 @@
 #include "color.h"
 #include "font16x16.h"
 #include "graphics.h"
+#include "sanae.h"
 #include <stdint.h>
 
 void draw_digit(int x, int y, int number, enum ColorType color) {
@@ -122,6 +123,7 @@ void draw_board(struct Board *b) {
   }
   clear_info_window();
   draw_info_window(b);
+  draw_sanae(b);
   graphics_sync();
 }
 
@@ -181,6 +183,28 @@ void clear_info_window() {
 #else
       vram[idx(i, j)] = kBackgroundColor;
 #endif
+    }
+  }
+}
+
+void draw_sanae(struct Board *b) {
+  for (int i = 0; i < SANAE_HEIGHT; ++i) {
+    for (int j = 0; j < SANAE_WIDTH; ++j) {
+      if (b->failed) {
+        graphics_fill_rectangle(i * 6 + SANAE_TOP_MARGIN,
+                                j * 6 + SANAE_LEFT_MARGIN, 6, 6,
+                                sanae_failed[i * SANAE_WIDTH + j]);
+
+      } else if (b->unlocked_num == SUCCESS) {
+        graphics_fill_rectangle(i * 6 + SANAE_TOP_MARGIN,
+                                j * 6 + SANAE_LEFT_MARGIN, 6, 6,
+                                sanae_successful[i * SANAE_WIDTH + j]);
+
+      } else {
+        graphics_fill_rectangle(i * 6 + SANAE_TOP_MARGIN,
+                                j * 6 + SANAE_LEFT_MARGIN, 6, 6,
+                                sanae[i * SANAE_WIDTH + j]);
+      }
     }
   }
 }

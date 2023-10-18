@@ -1,7 +1,9 @@
 # MINESWEEPER!
 
 <p align="center">
-  <img height=400 src="./resources/preview.png">
+  <img height=250 src="./resources/preview_win.png">
+  <img height=250 src="./resources/preview.png">
+  <img height=250 src="./resources/preview_gg.png">
 </p>
 
 MINESWEEPER! is my project of hardware system at HUST, fall 2023. In this project, I developed a simplified minesweeper game, which supports:
