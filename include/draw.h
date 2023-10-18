@@ -7,7 +7,7 @@
 #define CELL_HEIGHT 24
 #define EDGE_WIDTH 2
 #define BOARD_TOP_MARGIN 48
-#define BOARD_LEFT_MARGIN 128
+#define BOARD_LEFT_MARGIN 20
 #define TITLE_TOP_MARGIN 24
 #define TITLE_LEFT_MARGIN 224
 
@@ -32,6 +32,18 @@
 
 #define MESSAGE_TOP_MARGIN (BOARD_TOP_MARGIN + BOARD_HEIGHT * CELL_HEIGHT + 10)
 
+#define INFO_WINDOW_FRAME_LEFT_MARGIN (BOARD_LEFT_MARGIN + BOARD_WIDTH * CELL_WIDTH + 14)
+#define INFO_WINDOW_LEFT_MARGIN (INFO_WINDOW_FRAME_LEFT_MARGIN + 7)
+#define INFO_WINDOW_WIDTH 192
+#define INFO_WINDOW_ROW_SPACING 5
+#define INFO_WINDOW_ROW_NUM 3
+#define INFO_WINDOW_HEIGHT (INFO_WINDOW_ROW_NUM * (CHAR_HEIGHT + INFO_WINDOW_ROW_SPACING))
+#define INFO_WINDOW_FRAME_HEIGHT (INFO_WINDOW_HEIGHT + 4 + INFO_WINDOW_ROW_SPACING)
+#define INFO_WINDOW_FRAME_WIDTH (INFO_WINDOW_WIDTH + 14)
+#define INFO_WINDOW_FRAME_TOP_MARGIN 48
+#define INFO_WINDOW_TOP_MARGIN (INFO_WINDOW_FRAME_TOP_MARGIN + 2 + INFO_WINDOW_ROW_SPACING)
+#define INFO_WINDOW_NUMBER_LEFT_MARGIN (INFO_WINDOW_LEFT_MARGIN + 11 * CHAR_WIDTH)
+
 enum CellType {
   kEmpty,
   kDigit,
@@ -51,3 +63,6 @@ void draw_character(int x, int y, char c, enum ColorType color);
 void draw_string(int x, int y, char str[], int length, enum ColorType color);
 void draw_mine(int x, int y);
 void draw_blank_cell(int x, int y, enum ColorType color);
+void clear_message();
+void draw_info_window(struct Board *b);
+void clear_info_window();

@@ -25,6 +25,7 @@ struct Board {
   bool is_first_click;
   bool god_mode;
   uint8_t unlocked_num;
+  uint8_t flagged_num;
   // position of the cursor
   uint8_t x;
   uint8_t y;

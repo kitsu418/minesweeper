@@ -22,7 +22,7 @@ int main() {
         alive = false;
       } else {
         if (event.type == SDL_KEYDOWN) {
-          if (board.failed == false) {
+          if (board.failed == false && board.unlocked_num < SUCCESS) {
             switch (event.key.keysym.sym) {
             case SDLK_w:
               move_cursor_up(&board);
@@ -57,6 +57,7 @@ int main() {
             if (event.key.keysym.sym == SDLK_r) {
               clear_board(&board);
               generate_mine(&board, MINE_NUM);
+              clear_message();
             } else if (event.key.keysym.sym == SDLK_q) {
               alive = false;
             }

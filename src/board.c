@@ -18,6 +18,7 @@ void clear_board(struct Board *b) {
   b->is_first_click = true;
   b->god_mode = false;
   b->unlocked_num = 0;
+  b->flagged_num = 0;
   for (int i = 0; i < b->height; ++i) {
     for (int j = 0; j < b->width; ++j) {
       b->state[i][j] = kUnopen;
@@ -82,6 +83,7 @@ void first_click_with_mine(struct Board *b, int x, int y) {
 void flag_cell(struct Board *b) {
   if (b->state[b->x][b->y] == kUnopen) {
     b->state[b->x][b->y] = kFlagged;
+    ++b->flagged_num;
   } else if (b->state[b->x][b->y] == kFlagged) {
     b->state[b->x][b->y] = kUnopen;
   }

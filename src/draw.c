@@ -120,5 +120,67 @@ void draw_board(struct Board *b) {
                           "MINE TRIGGERED, PRESS R TO RESTART", 34,
                           kMessageColor);
   }
+  clear_info_window();
+  draw_info_window(b);
   graphics_sync();
+}
+
+inline static void draw_number_rtol(int x, int y, int num,
+                                    enum ColorType color) {
+  do {
+    draw_character(x, y, num % 10 + '0', color);
+    y -= CHAR_WIDTH;
+    num /= 10;
+  } while (num);
+}
+
+void clear_message() {
+  for (int i = MESSAGE_TOP_MARGIN; i < MESSAGE_TOP_MARGIN + CHAR_HEIGHT; ++i) {
+    for (int j = 0; j < DISPLAY_WIDTH; ++j) {
+#ifdef RISCV
+      set_vram(i, j, kBackgroundColor);
+#else
+      vram[idx(i, j)] = kBackgroundColor;
+#endif
+    }
+  }
+}
+
+void draw_info_window(struct Board *b) {
+  // draw the frame
+  graphics_draw_rectangle(
+      INFO_WINDOW_FRAME_TOP_MARGIN, INFO_WINDOW_FRAME_LEFT_MARGIN,
+      INFO_WINDOW_FRAME_WIDTH, INFO_WINDOW_FRAME_HEIGHT, kFrameColor);
+  graphics_draw_rectangle(
+      INFO_WINDOW_FRAME_TOP_MARGIN + 1, INFO_WINDOW_FRAME_LEFT_MARGIN + 1,
+      INFO_WINDOW_FRAME_WIDTH - 2, INFO_WINDOW_FRAME_HEIGHT - 2, kFrameColor);
+  draw_string(INFO_WINDOW_TOP_MARGIN, INFO_WINDOW_LEFT_MARGIN, "UNLOCKED ", 9,
+              kMessageColor);
+  draw_number_rtol(INFO_WINDOW_TOP_MARGIN, INFO_WINDOW_NUMBER_LEFT_MARGIN,
+                   b->unlocked_num, kMessageColor);
+  draw_string(INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT + INFO_WINDOW_ROW_SPACING,
+              INFO_WINDOW_LEFT_MARGIN, "FLAGGED  ", 9, kMessageColor);
+  draw_number_rtol(
+      INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT + INFO_WINDOW_ROW_SPACING,
+      INFO_WINDOW_NUMBER_LEFT_MARGIN, b->flagged_num, kMessageColor);
+  draw_string(INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT * 2 +
+                  INFO_WINDOW_ROW_SPACING * 2,
+              INFO_WINDOW_LEFT_MARGIN, "REMAINING", 9, kMessageColor);
+  draw_number_rtol(
+      INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT * 2 + INFO_WINDOW_ROW_SPACING * 2,
+      INFO_WINDOW_NUMBER_LEFT_MARGIN, MINE_NUM - b->flagged_num, kMessageColor);
+}
+
+void clear_info_window() {
+  for (int i = INFO_WINDOW_FRAME_TOP_MARGIN;
+       i < INFO_WINDOW_FRAME_TOP_MARGIN + INFO_WINDOW_FRAME_HEIGHT; ++i) {
+    for (int j = INFO_WINDOW_FRAME_LEFT_MARGIN;
+         j < INFO_WINDOW_FRAME_LEFT_MARGIN + INFO_WINDOW_FRAME_WIDTH; ++j) {
+#ifdef RISCV
+      set_vram(i, j, kBackgroundColor);
+#else
+      vram[idx(i, j)] = kBackgroundColor;
+#endif
+    }
+  }
 }
