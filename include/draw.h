@@ -43,7 +43,7 @@ enum CellType {
 void draw_board(struct Board *b);
 void draw_digit(int x, int y, int number, enum ColorType color);
 void draw_digit_segment(int x, int y, int segment, enum ColorType color);
-void draw_cell_frame(int x, int y, enum ColorType color);
+void draw_cell_frame(int x, int y, int w, enum ColorType color);
 void draw_cell_background(int x, int y, enum ColorType color);
 void draw_flag(int x, int y);
 void draw_title(int x, int y, enum ColorType color);

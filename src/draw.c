@@ -10,8 +10,11 @@ void draw_digit(int x, int y, int number, enum ColorType color) {
                  color);
 }
 
-void draw_cell_frame(int x, int y, enum ColorType color) {
-  graphics_draw_rectangle(x, y, CELL_WIDTH, CELL_HEIGHT, color);
+void draw_cell_frame(int x, int y, int w, enum ColorType color) {
+  for (int i = 0; i < w; ++i) {
+    graphics_draw_rectangle(x + i, y + i, CELL_WIDTH - i * 2,
+                            CELL_HEIGHT - i * 2, color);
+  }
 }
 
 void draw_cell_background(int x, int y, enum ColorType color) {
@@ -48,8 +51,10 @@ void draw_string(int x, int y, char str[], int length, enum ColorType color) {
   }
 }
 
-inline static void draw_string_in_middle(int x, char str[], int length, enum ColorType color) {
-  draw_string(x, (DISPLAY_WIDTH - length * CHAR_WIDTH) >> 1, str, length, color);
+inline static void draw_string_in_middle(int x, char str[], int length,
+                                         enum ColorType color) {
+  draw_string(x, (DISPLAY_WIDTH - length * CHAR_WIDTH) >> 1, str, length,
+              color);
 }
 
 void draw_mine(int x, int y) {
@@ -101,14 +106,19 @@ void draw_board(struct Board *b) {
         draw_mine(x, y);
         break;
       }
-      draw_cell_frame(x, y,
-                      (b->x == i && b->y == j) ? kCursorColor : kFrameColor);
+      if (b->x == i && b->y == j) {
+        draw_cell_frame(x, y, 2, kCursorColor);
+      } else {
+        draw_cell_frame(x, y, 1, kFrameColor);
+      }
     }
   }
   if (b->unlocked_num == SUCCESS) {
     draw_string_in_middle(MESSAGE_TOP_MARGIN, "YOU WIN!", 8, kMessageColor);
   } else if (b->failed) {
-    draw_string_in_middle(MESSAGE_TOP_MARGIN, "MINE TRIGGERED, PRESS R TO RESTART", 34, kMessageColor);
+    draw_string_in_middle(MESSAGE_TOP_MARGIN,
+                          "MINE TRIGGERED, PRESS R TO RESTART", 34,
+                          kMessageColor);
   }
   graphics_sync();
 }
