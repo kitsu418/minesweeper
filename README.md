@@ -1,5 +1,9 @@
 # MINESWEEPER!
 
+<p align="center">
+  <img height=400 src="./resources/preview.png">
+</p>
+
 MINESWEEPER! is my project of hardware system at HUST, fall 2023. In this project, I developed a simplified minesweeper game, which supports:
 - A 16x16 game board with 40 mines.
 - Random generation of mine layouts.
