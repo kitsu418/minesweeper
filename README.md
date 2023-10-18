@@ -35,7 +35,3 @@ cd build && make
 - [ ] Add a window containing some information about the game.
 - [ ] Add a message bar to guide players.
 - [ ] ~~Add a cheating button.~~
-
-## Acknowledgement
-Some of the implementation details were inspired by Wenzhuo Liu's selfless sharing in the past, thanks to him.
-Color scheme is designed by Eigensystem.

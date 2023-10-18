@@ -2,14 +2,16 @@
 #include "color.h"
 #include "display.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_log.h>
 #include <SDL2/SDL_render.h>
+#include <stdint.h>
 
 #define MAX_TEXT 100
 
 SDL_Window *window;
 SDL_Renderer *renderer;
 
-static int get_color(enum ColorType color) {
+static uint32_t get_color(enum ColorType color) {
   switch (color) {
   case kBackgroundColor:
     return COLOR_BACKGROUND;
@@ -36,39 +38,39 @@ static int get_color(enum ColorType color) {
   return -1;
 }
 
+#define EXEC(expression)                                                       \
+  if ((expression) != 0) {                                                     \
+    fprintf(stderr, "%s\n", SDL_GetError());                                   \
+  }
+
 void sdl_init() {
-  if (SDL_Init(SDL_INIT_VIDEO) == -1) {
-  }
-  if (SDL_CreateWindowAndRenderer(DISPLAY_WIDTH, DISPLAY_HEIGHT, 0, &window,
-                                  &renderer) == -1) {
-  }
-  SDL_SetWindowTitle(window, "Minesweeper");
+  EXEC(SDL_Init(SDL_INIT_VIDEO));
+  window = SDL_CreateWindow("Minesweeper", SDL_WINDOWPOS_CENTERED,
+                            SDL_WINDOWPOS_CENTERED, DISPLAY_WIDTH,
+                            DISPLAY_HEIGHT, SDL_WINDOW_OPENGL);
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 }
 
-void sdl_set_color(unsigned int color) {
-  SDL_SetRenderDrawColor(renderer, color >> 24, color >> 16, color >> 8, color);
+void sdl_set_color(uint32_t color) {
+  EXEC(SDL_SetRenderDrawColor(renderer, color >> 24, color >> 16, color >> 8, color));
 }
 
 void sdl_draw_rectangle(int x, int y, int w, int h) {
   SDL_Rect rect = {x, y, w, h};
-  SDL_RenderDrawRect(renderer, &rect);
+  EXEC(SDL_RenderDrawRect(renderer, &rect));
 }
 
 void sdl_fill_rectangle(int x, int y, int w, int h) {
   SDL_Rect rect = {x, y, w, h};
-  SDL_RenderFillRect(renderer, &rect);
-}
-
-void sdl_draw_line(int x1, int y1, int x2, int y2) {
-  SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+  EXEC(SDL_RenderFillRect(renderer, &rect));
 }
 
 void sdl_sync() {
   for (int i = 0; i < DISPLAY_HEIGHT; i++) {
     for (int j = 0; j < DISPLAY_WIDTH; j++) {
-      int c = get_color(vram[idx(i, j)]);
+      uint32_t c = get_color(vram[idx(i, j)]);
       sdl_set_color(c);
-      SDL_RenderDrawPoint(renderer, j, i);
+      EXEC(SDL_RenderDrawPoint(renderer, j, i));
     }
   }
   SDL_RenderPresent(renderer);

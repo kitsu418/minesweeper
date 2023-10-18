@@ -2,7 +2,6 @@
 #include "random.h"
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>
 
 static inline bool check_in_board(struct Board *b, int x, int y) {
   return (x < b->height && x >= 0) && (y < b->width && y >= 0);

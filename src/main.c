@@ -26,40 +26,44 @@ int main() {
   SDL_Event event;
   while (alive) {
     while (SDL_PollEvent(&event)) {
-      if (event.type == SDL_KEYDOWN) {
-        if (board.failed == false) {
-          switch (event.key.keysym.sym) {
-          case SDLK_w:
-            move_cursor_up(&board);
-            break;
-          case SDLK_s:
-            move_cursor_down(&board);
-            break;
-          case SDLK_a:
-            move_cursor_left(&board);
-            break;
-          case SDLK_d:
-            move_cursor_right(&board);
-            break;
-          case SDLK_f:
-            flag_cell(&board);
-            break;
-          case SDLK_o:
-            click_cell(&board);
-            break;
-          case SDLK_r:
-            clear_board(&board);
-            generate_mine(&board, MINE_NUM);
-            break;
-          case SDLK_q:
-            alive = false;
-          }
-        } else {
-          if (event.key.keysym.sym == SDLK_r) {
-            clear_board(&board);
-            generate_mine(&board, MINE_NUM);
-          } else if (event.key.keysym.sym == SDLK_q) {
-            alive = false;
+      if (event.type == SDL_QUIT) {
+        alive = false;
+      } else {
+        if (event.type == SDL_KEYDOWN) {
+          if (board.failed == false) {
+            switch (event.key.keysym.sym) {
+            case SDLK_w:
+              move_cursor_up(&board);
+              break;
+            case SDLK_s:
+              move_cursor_down(&board);
+              break;
+            case SDLK_a:
+              move_cursor_left(&board);
+              break;
+            case SDLK_d:
+              move_cursor_right(&board);
+              break;
+            case SDLK_f:
+              flag_cell(&board);
+              break;
+            case SDLK_o:
+              click_cell(&board);
+              break;
+            case SDLK_r:
+              clear_board(&board);
+              generate_mine(&board, MINE_NUM);
+              break;
+            case SDLK_q:
+              alive = false;
+            }
+          } else {
+            if (event.key.keysym.sym == SDLK_r) {
+              clear_board(&board);
+              generate_mine(&board, MINE_NUM);
+            } else if (event.key.keysym.sym == SDLK_q) {
+              alive = false;
+            }
           }
         }
       }
