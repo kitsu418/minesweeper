@@ -39,7 +39,7 @@ void generate_mine(struct Board *b, int mine_num) {
     if (b->mine[x][y] == false) {
       b->mine[x][y] = true;
     } else {
-      --mine_num;
+      ++mine_num;
     }
   }
 }
@@ -86,6 +86,7 @@ void flag_cell(struct Board *b) {
     ++b->flagged_num;
   } else if (b->state[b->x][b->y] == kFlagged) {
     b->state[b->x][b->y] = kUnopen;
+    --b->flagged_num;
   }
 }
 
