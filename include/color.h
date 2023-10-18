@@ -11,12 +11,14 @@
 #define COLOR_CURSOR 0xFF0000FF
 #define COLOR_FRAME 0x000000FF
 #define COLOR_MINE 0x000000FF
+#define COLOR_MESSAGE 0x466E60FF
 
 enum ColorType {
   kBackgroundColor,
   kCharacterColor,
   kBoomCellBackgroundColor,
   kTitleColor,
+  kMessageColor,
   kFlagColor,
   kFlagpoleColor,
   kFrameColor,

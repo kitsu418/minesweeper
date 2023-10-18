@@ -36,6 +36,8 @@ static uint32_t get_color(enum ColorType color) {
     return COLOR_CHARACTER;
   case kMineColor:
     return COLOR_MINE;
+  case kMessageColor:
+    return COLOR_MESSAGE;
   }
   return -1;
 }
@@ -54,7 +56,8 @@ void sdl_init() {
 }
 
 void sdl_set_color(uint32_t color) {
-  EXEC(SDL_SetRenderDrawColor(renderer, color >> 24, color >> 16, color >> 8, color));
+  EXEC(SDL_SetRenderDrawColor(renderer, color >> 24, color >> 16, color >> 8,
+                              color));
 }
 
 void sdl_draw_rectangle(int x, int y, int w, int h) {

@@ -30,6 +30,8 @@
 #define MINE_TOP_MARGIN 4
 #define MINE_LEFT_MARGIN 4
 
+#define MESSAGE_TOP_MARGIN (BOARD_TOP_MARGIN + BOARD_HEIGHT * CELL_HEIGHT + 10)
+
 enum CellType {
   kEmpty,
   kDigit,

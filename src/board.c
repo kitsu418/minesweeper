@@ -8,8 +8,8 @@ static inline bool check_in_board(struct Board *b, int x, int y) {
 }
 
 void init_board(struct Board *b) {
-  b->height = HEIGHT;
-  b->width = WIDTH;
+  b->height = BOARD_HEIGHT;
+  b->width = BOARD_WIDTH;
   clear_board(b);
 }
 
@@ -17,6 +17,7 @@ void clear_board(struct Board *b) {
   b->failed = false;
   b->is_first_click = true;
   b->god_mode = false;
+  b->unlocked_num = 0;
   for (int i = 0; i < b->height; ++i) {
     for (int j = 0; j < b->width; ++j) {
       b->state[i][j] = kUnopen;
@@ -116,6 +117,7 @@ void uncover_cell(struct Board *b, int x, int y) {
   if (b->mine[x][y] == true) {
     return;
   } else {
+    ++b->unlocked_num;
     b->number[x][y] = count_surrounding_mines(b, x, y);
     if (b->number[x][y] == 0) {
       b->state[x][y] = kBlank;

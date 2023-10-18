@@ -7,14 +7,6 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_keycode.h>
 
-#ifdef EASY
-#define MINE_NUM 10
-#elif NORMAL
-#define MINE_NUM 40
-#elif HARD
-#define MINE_NUM 99
-#endif
-
 int main() {
   struct Board board;
   init_board(&board);

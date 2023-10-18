@@ -2,16 +2,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#ifdef EASY
-#define WIDTH 9
-#define HEIGHT 9
-#elif NORMAL
-#define WIDTH 16
-#define HEIGHT 16
-#elif HARD
-#define WIDTH 16
-#define HEIGHT 30
-#endif
+#define BOARD_WIDTH 16
+#define BOARD_HEIGHT 16
+#define MINE_NUM 40
+#define SUCCESS (BOARD_WIDTH * BOARD_HEIGHT - MINE_NUM)
 
 enum CellState {
   kUnopen,
@@ -22,14 +16,15 @@ enum CellState {
 };
 
 struct Board {
-  enum CellState state[HEIGHT][WIDTH];
-  uint8_t number[HEIGHT][WIDTH];
-  bool mine[HEIGHT][WIDTH];
+  enum CellState state[BOARD_HEIGHT][BOARD_WIDTH];
+  uint8_t number[BOARD_HEIGHT][BOARD_WIDTH];
+  bool mine[BOARD_HEIGHT][BOARD_WIDTH];
   uint8_t width;
   uint8_t height;
   bool failed;
   bool is_first_click;
   bool god_mode;
+  uint8_t unlocked_num;
   // position of the cursor
   uint8_t x;
   uint8_t y;

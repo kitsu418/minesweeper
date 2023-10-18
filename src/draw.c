@@ -48,6 +48,10 @@ void draw_string(int x, int y, char str[], int length, enum ColorType color) {
   }
 }
 
+inline static void draw_string_in_middle(int x, char str[], int length, enum ColorType color) {
+  draw_string(x, (DISPLAY_WIDTH - length * CHAR_WIDTH) >> 1, str, length, color);
+}
+
 void draw_mine(int x, int y) {
   for (int i = 0; i < MINE_HEIGHT; ++i) {
     uint32_t mask = 0x8000;
@@ -100,6 +104,11 @@ void draw_board(struct Board *b) {
       draw_cell_frame(x, y,
                       (b->x == i && b->y == j) ? kCursorColor : kFrameColor);
     }
+  }
+  if (b->unlocked_num == SUCCESS) {
+    draw_string_in_middle(MESSAGE_TOP_MARGIN, "YOU WIN!", 8, kMessageColor);
+  } else if (b->failed) {
+    draw_string_in_middle(MESSAGE_TOP_MARGIN, "MINE TRIGGERED, PRESS R TO RESTART", 34, kMessageColor);
   }
   graphics_sync();
 }
