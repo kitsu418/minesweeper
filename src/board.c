@@ -9,6 +9,7 @@ static inline bool check_in_board(struct Board *b, int x, int y) {
 
 void init_board(struct Board *b) {
   b->failed = false;
+  b->is_first_click = true;
   b->height = HEIGHT;
   b->width = WIDTH;
   for (int i = 0; i < b->height; ++i) {
@@ -24,6 +25,7 @@ void init_board(struct Board *b) {
 
 void clear_board(struct Board *b) {
   b->failed = false;
+  b->is_first_click = true;
   for (int i = 0; i < b->height; ++i) {
     for (int j = 0; j < b->width; ++j) {
       b->state[i][j] = kUnopen;
@@ -76,7 +78,7 @@ void move_cursor_right(struct Board *b) {
 void first_click_with_mine(struct Board *b, int x, int y) {
   for (uint8_t i = 0; i < b->height; ++i) {
     for (uint8_t j = 0; j < b->width; ++j) {
-      if (b->mine[i][j] == false && i != x && j != y) {
+      if (b->mine[i][j] == false && (i != x || j != y)) {
         b->mine[i][j] = true;
         b->mine[x][y] = false;
         return;
@@ -94,12 +96,20 @@ void flag_cell(struct Board *b) {
 }
 
 void click_cell(struct Board *b) {
-  if (b->state[b->x][b->y] == kUnopen || b->state[b->x][b->y] == kFlagged) {
+  if (b->is_first_click) {
+    b->is_first_click = false;
     if (b->mine[b->x][b->y] == true) {
-      b->state[b->x][b->y] = kMine;
-      b->failed = true;
-    } else {
-      uncover_cell(b, b->x, b->y);
+      first_click_with_mine(b, b->x, b->y);
+    }
+    uncover_cell(b, b->x, b->y);
+  } else {
+    if (b->state[b->x][b->y] == kUnopen || b->state[b->x][b->y] == kFlagged) {
+      if (b->mine[b->x][b->y] == true) {
+        b->state[b->x][b->y] = kMine;
+        b->failed = true;
+      } else {
+        uncover_cell(b, b->x, b->y);
+      }
     }
   }
 }

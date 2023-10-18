@@ -53,7 +53,8 @@ void draw_mine(int x, int y) {
     uint32_t mask = 0x8000;
     for (int j = 0; j < MINE_WIDTH; ++j, mask >>= 1) {
       if (mine_font[i] & mask) {
-        graphics_draw_pixel(x + i + MINE_TOP_MARGIN, y + j + MINE_LEFT_MARGIN, kMineColor);
+        graphics_draw_pixel(x + i + MINE_TOP_MARGIN, y + j + MINE_LEFT_MARGIN,
+                            kMineColor);
       }
     }
   }
@@ -73,6 +74,11 @@ void draw_board(struct Board *b) {
       switch (b->state[i][j]) {
       case kUnopen:
         draw_cell_background(x, y, kUnopenedBackgroundColor);
+#ifdef DEBUG
+        if (b->mine[i][j]) {
+          draw_mine(x, y);
+        }
+#endif
         break;
       case kNumbered:
         draw_cell_background(x, y, kOpenedBackgroundColor);
