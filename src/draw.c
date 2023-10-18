@@ -48,7 +48,16 @@ void draw_string(int x, int y, char str[], int length, enum ColorType color) {
   }
 }
 
-void draw_mine(int x, int y) { draw_character(x, y, 'M', kTitleColor); }
+void draw_mine(int x, int y) {
+  for (int i = 0; i < MINE_HEIGHT; ++i) {
+    uint32_t mask = 0x8000;
+    for (int j = 0; j < MINE_WIDTH; ++j, mask >>= 1) {
+      if (mine_font[i] & mask) {
+        graphics_draw_pixel(x + i + MINE_TOP_MARGIN, y + j + MINE_LEFT_MARGIN, kMineColor);
+      }
+    }
+  }
+}
 
 void draw_blank_cell(int x, int y, enum ColorType color) {
   graphics_fill_rectangle(x + 1, y + 1, CELL_WIDTH - 2, CELL_HEIGHT - 2,

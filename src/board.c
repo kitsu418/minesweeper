@@ -115,7 +115,6 @@ void uncover_cell(struct Board *b, int x, int y) {
     return;
   } else {
     b->number[x][y] = count_surrounding_mines(b, x, y);
-    printf("%d %d %d\n", x, y, b->number[x][y]);
     if (b->number[x][y] == 0) {
       b->state[x][y] = kBlank;
       uncover_cell(b, x + 1, y);

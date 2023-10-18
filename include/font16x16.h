@@ -10,6 +10,8 @@
 #define EMPTY_INDEX 39
 #define CHAR_WIDTH 16
 #define CHAR_HEIGHT 14
+#define MINE_WIDTH 16
+#define MINE_HEIGHT 16
 
 extern uint32_t font[][14];
 extern uint32_t mine_font[16];

@@ -34,6 +34,8 @@ static uint32_t get_color(enum ColorType color) {
     return COLOR_UNOPENED;
   case kCharacterColor:
     return COLOR_CHARACTER;
+  case kMineColor:
+    return COLOR_MINE;
   }
   return -1;
 }

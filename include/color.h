@@ -10,6 +10,7 @@
 #define COLOR_OPENED 0xACACC7FF
 #define COLOR_CURSOR 0xFF0000FF
 #define COLOR_FRAME 0x000000FF
+#define COLOR_MINE 0x000000FF
 
 enum ColorType {
   kBackgroundColor,
@@ -23,4 +24,5 @@ enum ColorType {
   kCursorColor,
   kOpenedBackgroundColor,
   kUnopenedBackgroundColor,
+  kMineColor,
 };
