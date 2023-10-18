@@ -29,6 +29,7 @@ struct Board {
   uint8_t height;
   bool failed;
   bool is_first_click;
+  bool god_mode;
   // position of the cursor
   uint8_t x;
   uint8_t y;

@@ -28,10 +28,9 @@ cd build && make
 - Press Q to quit the game.
 
 ## TODO
-- [ ] **[TOP PRIORITY]** Fix memory leaks!!!
 - [ ] Support receiving inputs from PS2 keyboard (on self-made RISC-V CPU).
 - [x] Optimize the color scheme to make the UI more beautiful.
 - [ ] Support mouse for x86 machines.
 - [ ] Add a window containing some information about the game.
 - [ ] Add a message bar to guide players.
-- [ ] ~~Add a cheating button.~~
+- [x] ~~Add a cheating button.~~

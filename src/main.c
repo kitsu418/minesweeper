@@ -56,6 +56,10 @@ int main() {
               break;
             case SDLK_q:
               alive = false;
+              break;
+            case SDLK_v:
+              board.god_mode ^= 1;
+              break;
             }
           } else {
             if (event.key.keysym.sym == SDLK_r) {

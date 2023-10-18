@@ -74,11 +74,11 @@ void draw_board(struct Board *b) {
       switch (b->state[i][j]) {
       case kUnopen:
         draw_cell_background(x, y, kUnopenedBackgroundColor);
-#ifdef DEBUG
-        if (b->mine[i][j]) {
-          draw_mine(x, y);
+        if (b->god_mode) {
+          if (b->mine[i][j]) {
+            draw_mine(x, y);
+          }
         }
-#endif
         break;
       case kNumbered:
         draw_cell_background(x, y, kOpenedBackgroundColor);
