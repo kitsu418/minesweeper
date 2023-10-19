@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdint.h>
 #define COLOR_BACKGROUND 0xFFACC7FF
 #define COLOR_CHARACTER 0xF6FED0FF
 #define COLOR_BOOM_BACKGROUND 0xEF6F4FFF
@@ -14,26 +15,26 @@
 #define COLOR_MESSAGE 0x466E60FF
 
 #define COLOR_SANAE_0 COLOR_BACKGROUND
-#define COLOR_SANAE_1 0xff
-#define COLOR_SANAE_2 0x58b675ff
-#define COLOR_SANAE_3 0xb95c39ff
-#define COLOR_SANAE_4 0x1a9168ff
-#define COLOR_SANAE_5 0xffffffff
-#define COLOR_SANAE_6 0xc3d4ffff
-#define COLOR_SANAE_7 0x140700ff
-#define COLOR_SANAE_8 0xb79800ff
-#define COLOR_SANAE_9 0xffe1bdff
-#define COLOR_SANAE_10 0x576c9eff
-#define COLOR_SANAE_11 0x6c5600ff
-#define COLOR_SANAE_12 0xfefefeff
-#define COLOR_SANAE_13 0xdd9e81ff
-#define COLOR_SANAE_14 0x8da0ceff
-#define COLOR_SANAE_15 0x1b4618ff
-#define COLOR_SANAE_16 0x9d4a25ff
-#define COLOR_SANAE_17 0x8484c6ff
-#define COLOR_SANAE_18 0x222254ff
+#define COLOR_SANAE_1 0x000000FF
+#define COLOR_SANAE_2 0x58B675FF
+#define COLOR_SANAE_3 0xB95C39FF
+#define COLOR_SANAE_4 0x1A9168FF
+#define COLOR_SANAE_5 0xFFFFFFFF
+#define COLOR_SANAE_6 0xC3D4FFFF
+#define COLOR_SANAE_7 0x140700FF
+#define COLOR_SANAE_8 0xB79800FF
+#define COLOR_SANAE_9 0xFFE1BDFF
+#define COLOR_SANAE_10 0x576C9EFF
+#define COLOR_SANAE_11 0x6C5600FF
+#define COLOR_SANAE_12 0xFEFEFEFF
+#define COLOR_SANAE_13 0xDD9E81FF
+#define COLOR_SANAE_14 0x8DA0CEFF
+#define COLOR_SANAE_15 0x1B4618FF
+#define COLOR_SANAE_16 0x9D4A25FF
+#define COLOR_SANAE_17 0x8484C6FF
+#define COLOR_SANAE_18 0x222254FF
 
-enum ColorType {
+enum ColorType : uint8_t {
   kBackgroundColor,
   kCharacterColor,
   kBoomCellBackgroundColor,
