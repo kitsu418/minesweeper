@@ -1,4 +1,5 @@
 #include "sanae.h"
+#include "color.h"
 
 enum ColorType sanae[] = {
     kSanaeColor0,  kSanaeColor0,  kSanaeColor0,  kSanaeColor0,  kSanaeColor0,
@@ -415,7 +416,7 @@ enum ColorType sanae_successful[] = {
     kSanaeColor0,  kSanaeColor0,  kSanaeColor0,  kSanaeColor0,
 };
 
-uint32_t sanae_failed[] = {
+enum ColorType sanae_failed[] = {
     kSanaeColor0,  kSanaeColor0,  kSanaeColor0,  kSanaeColor0,  kSanaeColor0,
     kSanaeColor0,  kSanaeColor0,  kSanaeColor0,  kSanaeColor0,  kSanaeColor0,
     kSanaeColor0,  kSanaeColor0,  kSanaeColor0,  kSanaeColor0,  kSanaeColor0,

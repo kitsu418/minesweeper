@@ -139,11 +139,7 @@ inline static void draw_number_rtol(int x, int y, int num,
 void clear_message() {
   for (int i = MESSAGE_TOP_MARGIN; i < MESSAGE_TOP_MARGIN + CHAR_HEIGHT; ++i) {
     for (int j = 0; j < DISPLAY_WIDTH; ++j) {
-#ifdef RISCV
-      set_vram(i, j, kBackgroundColor);
-#else
-      vram[idx(i, j)] = kBackgroundColor;
-#endif
+      graphics_draw_pixel(i, j, kBackgroundColor);
     }
   }
 }
@@ -178,11 +174,7 @@ void clear_info_window() {
        i < INFO_WINDOW_FRAME_TOP_MARGIN + INFO_WINDOW_FRAME_HEIGHT; ++i) {
     for (int j = INFO_WINDOW_FRAME_LEFT_MARGIN;
          j < INFO_WINDOW_FRAME_LEFT_MARGIN + INFO_WINDOW_FRAME_WIDTH; ++j) {
-#ifdef RISCV
-      set_vram(i, j, kBackgroundColor);
-#else
-      vram[idx(i, j)] = kBackgroundColor;
-#endif
+      graphics_draw_pixel(i, j, kBackgroundColor);
     }
   }
 }

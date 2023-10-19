@@ -23,6 +23,16 @@
 #define KEYBOARD_READY_ADDR ((volatile bool *)0xdeadbeee)
 #define KEYBOARD_DATA_ADDR ((volatile uint8_t *)0xdeadbeef)
 
+#define SCANCODE_Q 0x15
+#define SCANCODE_W 0x1D
+#define SCANCODE_A 0x1C
+#define SCANCODE_S 0x1B
+#define SCANCODE_D 0x23
+#define SCANCODE_F 0x2B
+#define SCANCODE_O 0x44
+#define SCANCODE_V 0x2A
+#define SCANCODE_R 0x2D
+
 void set_vram(int x, int y, uint8_t color);
 void commit_vram();
 
