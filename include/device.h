@@ -14,27 +14,19 @@
 #define VRAM_WIDTH DISPLAY_WIDTH
 #define VRAM_HEIGHT DISPLAY_HEIGHT
 
-// As for ps2 keyboards, the interface has two main signal lines, data and
-// clock. To transmit a byte, the device simply outputs a serial frame of data
-// (including 8 bits of data and a parity bit) on the Data line serially as it
-// toggles the Clock line once for each bit.
-// The driver would maintain a FIFO queue to store received bytes and a ready
-// signal.
-#define KEYBOARD_READY_ADDR ((volatile bool *)0xdeadbeee)
-#define KEYBOARD_DATA_ADDR ((volatile uint8_t *)0xdeadbeef)
-
-#define SCANCODE_Q 0x15
-#define SCANCODE_W 0x1D
-#define SCANCODE_A 0x1C
-#define SCANCODE_S 0x1B
-#define SCANCODE_D 0x23
-#define SCANCODE_F 0x2B
-#define SCANCODE_O 0x44
-#define SCANCODE_V 0x2A
-#define SCANCODE_R 0x2D
-
 void set_vram(int x, int y, uint8_t color);
 void commit_vram();
 
-bool keyboard_ready();
-uint8_t keyboard_data();
+// As for ps2 mouses, the higher level interface would give us the x, y position
+// and butten presses directly.
+#define MOUSE_X ((volatile uint16_t *)0xdeadbeef)
+#define MOUSE_Y ((volatile uint16_t *)0xdeadbef0)
+#define MOUSE_LEFT_BUTTON ((volatile bool *)0xdeadbef1)
+#define MOUSE_MIDDLE_BUTTON ((volatile bool *)0xdeadbef2)
+#define MOUSE_RIGHT_BUTTON ((volatile bool *)0xdeadbef3)
+
+bool mouse_left_button_pressed();
+bool mouse_middle_button_pressed();
+bool mouse_right_button_pressed();
+uint16_t mouse_x();
+uint16_t mouse_y();

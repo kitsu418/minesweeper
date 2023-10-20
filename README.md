@@ -21,22 +21,15 @@ paru -S clang lld cmake
 
 ## Build & Run
 ```bash
-cmake -B build
+CC=clang LD=lld cmake -B build
 cd build && make
 ./minesweeper
 ```
 
-## Usage
-- Use WASD to move the cursor.
-- Press O to open the tile.
-- Press F to mark the flag.
-- Press R to restart the game.
-- Press Q to quit the game.
-
 ## TODO
 - [x] Support receiving inputs from PS2 keyboard (on self-made RISC-V CPU).
 - [x] Optimize the color scheme to make the UI more beautiful.
-- [ ] Support mouse for x86 machines.
+- [x] Support mouse for both x86 and self-made RISC-V machines.
 - [x] Add a window containing some information about the game.
 - [x] Add a message bar to guide players.
 - [x] ~~Add a cheating button.~~

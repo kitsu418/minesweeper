@@ -2,6 +2,8 @@
 #include "display.h"
 #include "draw.h"
 #include "graphics.h"
+#include "mouse.h"
+#include <stdint.h>
 
 #ifndef RISCV
 #include "sdl_interface.h"
@@ -16,95 +18,82 @@ int main() {
   struct Board board;
   init_board(&board);
   generate_mine(&board, MINE_NUM);
+
   graphics_init();
+  draw_title(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN, kTitleColor);
+  draw_sanae(&board);
+  draw_exit_button();
+  draw_restart_button();
 
   bool alive = true;
-#ifndef RISCV
-  SDL_Event event;
+  uint16_t x = 0;
+  uint16_t y = 0;
+  bool lb = false;
+  bool mb = false;
+  bool rb = false;
   while (alive) {
+#ifndef RISCV
+    SDL_Event event;
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT) {
         alive = false;
-      } else {
-        if (event.type == SDL_KEYDOWN) {
-          if (event.key.keysym.sym == SDLK_r) {
-            clear_board(&board);
-            clear_message();
-            generate_mine(&board, MINE_NUM);
-          } else if (event.key.keysym.sym == SDLK_q) {
-            alive = false;
-          } else if (board.failed == false && board.unlocked_num < SUCCESS) {
-            switch (event.key.keysym.sym) {
-            case SDLK_w:
-              move_cursor_up(&board);
-              break;
-            case SDLK_s:
-              move_cursor_down(&board);
-              break;
-            case SDLK_a:
-              move_cursor_left(&board);
-              break;
-            case SDLK_d:
-              move_cursor_right(&board);
-              break;
-            case SDLK_f:
-              flag_cell(&board);
-              break;
-            case SDLK_o:
-              click_cell(&board);
-              break;
-            case SDLK_v:
-              board.god_mode ^= 1;
-              break;
-            }
+      } else if (event.type == SDL_MOUSEMOTION) {
+        x = event.motion.y;
+        y = event.motion.x;
+        set_cursor(&board, x, y);
+      } else if (event.type == SDL_MOUSEBUTTONDOWN) {
+        if (exit_button_activated(x, y)) {
+          alive = false;
+        } else if (restart_button_activated(x, y)) {
+          clear_board(&board);
+          clear_message();
+          generate_mine(&board, MINE_NUM);
+        } else if (board.failed == false && board.unlocked_num < SUCCESS) {
+          if (event.button.button == SDL_BUTTON_LEFT) {
+            click_cell(&board);
+          }
+          if (event.button.button == SDL_BUTTON_RIGHT) {
+            flag_cell(&board);
+          }
+          if (event.button.button == SDL_BUTTON_MIDDLE) {
+            board.god_mode ^= 1;
           }
         }
       }
     }
-    draw_board(&board);
-    graphics_sync();
-  }
-  sdl_drop();
 #else
-  while (alive) {
-    while (!keyboard_ready()) {
-      uint8_t key = keyboard_data();
-      if (key == SCANCODE_R) {
+    x = mouse_y();
+    y = mouse_x();
+    lb = mouse_left_button_pressed();
+    mb = mouse_middle_button_pressed();
+    rb = mouse_right_button_pressed();
+    set_cursor(&board, x, y);
+    if (lb || mb || rb) {
+      if (exit_button_activated(x, y)) {
+        alive = false;
+      } else if (restart_button_activated(x, y)) {
         clear_board(&board);
         clear_message();
         generate_mine(&board, MINE_NUM);
-      } else if (key == SCANCODE_Q) {
-        alive = false;
       } else if (board.failed == false && board.unlocked_num < SUCCESS) {
-        switch (keyboard_data()) {
-        case SCANCODE_W:
-          move_cursor_up(&board);
-          break;
-        case SCANCODE_S:
-          move_cursor_down(&board);
-          break;
-        case SCANCODE_A:
-          move_cursor_left(&board);
-          break;
-        case SCANCODE_D:
-          move_cursor_right(&board);
-          break;
-        case SCANCODE_F:
-          flag_cell(&board);
-          break;
-        case SCANCODE_O:
+        if (lb) {
           click_cell(&board);
-          break;
-        case SCANCODE_V:
-          board.god_mode ^= 1;
-          break;
         }
-      } else {
+        if (rb) {
+          flag_cell(&board);
+        }
+        if (mb) {
+          board.god_mode ^= 1;
+        }
       }
     }
+#endif
     draw_board(&board);
     graphics_sync();
   }
+
+#ifndef RISCV
+  sdl_drop();
 #endif
   return 0;
 }

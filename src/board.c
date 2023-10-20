@@ -2,6 +2,7 @@
 #include "random.h"
 #include <stdbool.h>
 #include <stdint.h>
+#include "draw.h"
 
 static inline bool check_in_board(struct Board *b, int x, int y) {
   return (x < b->height && x >= 0) && (y < b->width && y >= 0);
@@ -41,30 +42,6 @@ void generate_mine(struct Board *b, int mine_num) {
     } else {
       ++mine_num;
     }
-  }
-}
-
-void move_cursor_up(struct Board *b) {
-  if (b->x > 0) {
-    b->x -= 1;
-  }
-}
-
-void move_cursor_down(struct Board *b) {
-  if (b->x < b->height - 1) {
-    b->x += 1;
-  }
-}
-
-void move_cursor_left(struct Board *b) {
-  if (b->y > 0) {
-    b->y -= 1;
-  }
-}
-
-void move_cursor_right(struct Board *b) {
-  if (b->y < b->width - 1) {
-    b->y += 1;
   }
 }
 
@@ -145,4 +122,15 @@ uint8_t count_surrounding_mines(struct Board *b, int x, int y) {
     }
   }
   return val;
+}
+
+void set_cursor(struct Board *b, uint16_t x, uint16_t y) {
+  if (x < BOARD_TOP_MARGIN || x >= (BOARD_TOP_MARGIN + b->height * CELL_HEIGHT)) {
+    return;
+  }
+  if (y < BOARD_LEFT_MARGIN || y >= (BOARD_LEFT_MARGIN + b->width * CELL_WIDTH)) {
+    return;
+  }
+  b->x = (x - BOARD_TOP_MARGIN) / CELL_HEIGHT;
+  b->y = (y - BOARD_LEFT_MARGIN) / CELL_WIDTH;
 }

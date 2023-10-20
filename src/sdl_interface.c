@@ -2,6 +2,7 @@
 #include "color.h"
 #include "display.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_events.h>
 #include <SDL2/SDL_log.h>
 #include <SDL2/SDL_render.h>
 #include <stdint.h>

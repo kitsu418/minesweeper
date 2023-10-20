@@ -76,7 +76,6 @@ void draw_blank_cell(int x, int y, enum ColorType color) {
 }
 
 void draw_board(struct Board *b) {
-  draw_title(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN, kTitleColor);
   for (uint8_t i = 0; i < b->height; ++i) {
     for (uint8_t j = 0; j < b->width; ++j) {
       int x = BOARD_TOP_MARGIN + i * CELL_HEIGHT;
@@ -123,8 +122,6 @@ void draw_board(struct Board *b) {
   }
   clear_info_window();
   draw_info_window(b);
-  draw_sanae(b);
-  graphics_sync();
 }
 
 inline static void draw_number_rtol(int x, int y, int num,
@@ -199,4 +196,25 @@ void draw_sanae(struct Board *b) {
       }
     }
   }
+}
+
+void draw_exit_button() {
+  graphics_draw_rectangle(EXIT_BUTTON_TOP_MARGIN, EXIT_BUTTON_LEFT_MARGIN,
+                          EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT, kFrameColor);
+  graphics_draw_rectangle(EXIT_BUTTON_TOP_MARGIN + 1,
+                          EXIT_BUTTON_LEFT_MARGIN + 1, EXIT_BUTTON_WIDTH - 2,
+                          EXIT_BUTTON_HEIGHT - 2, kFrameColor);
+  draw_string(EXIT_CHAR_TOP_MARGIN, EXIT_CHAR_LEFT_MARGIN, "EXIT", 4,
+              kMessageColor);
+}
+
+void draw_restart_button() {
+  graphics_draw_rectangle(RESTART_BUTTON_TOP_MARGIN, RESTART_BUTTON_LEFT_MARGIN,
+                          RESTART_BUTTON_WIDTH, RESTART_BUTTON_HEIGHT,
+                          kFrameColor);
+  graphics_draw_rectangle(
+      RESTART_BUTTON_TOP_MARGIN + 1, RESTART_BUTTON_LEFT_MARGIN + 1,
+      RESTART_BUTTON_WIDTH - 2, RESTART_BUTTON_HEIGHT - 2, kFrameColor);
+  draw_string(RESTART_CHAR_TOP_MARGIN, RESTART_CHAR_LEFT_MARGIN, "REMAKE", 6,
+              kMessageColor);
 }

@@ -16,6 +16,7 @@ add_executable(minesweeper
   src/random.c
   src/sanae.c
   src/sdl_interface.c
+  src/mouse.c
   include/color.h
   include/board.h
   include/display.h
@@ -25,6 +26,7 @@ add_executable(minesweeper
   include/random.h
   include/sanae.h
   include/sdl_interface.h
+  include/mouse.h
 )
 target_link_libraries(minesweeper PUBLIC SDL2)
 
@@ -38,6 +40,7 @@ add_executable(minesweeper_rv
   src/random.c
   src/sanae.c
   src/device.c
+  src/mouse.c
   include/color.h
   include/board.h
   include/display.h
@@ -47,9 +50,10 @@ add_executable(minesweeper_rv
   include/random.h
   include/sanae.h
   include/device.h
+  include/mouse.h
 )
 target_compile_options(minesweeper_rv PUBLIC
-  --target=riscv32-unknown-unknown
+  --target=riscv32-unknown-elf
   -march=rv32im
   -ffreestanding
   -fno-builtin
@@ -61,11 +65,11 @@ target_compile_options(minesweeper_rv PUBLIC
   -flto
 )
 target_link_options(minesweeper_rv PUBLIC
-  # -T ${CMAKE_SOURCE_DIR}/${LINKER_SCRIPT}
-  --target=riscv32-unknown-unknown
+  --target=riscv32-unknown-elf
   -march=rv32im
   -ffreestanding
-  -fno-builtin -nostdlib
+  -fno-builtin
+  -nostdlib
   -mno-relax
   -fno-PIE
   -G=0
@@ -73,5 +77,5 @@ target_link_options(minesweeper_rv PUBLIC
   -flto
 )
 
-target_compile_definitions(minesweeper PUBLIC NORMAL)
-target_compile_definitions(minesweeper_rv PUBLIC NORMAL RISCV)
+# target_compile_definitions(minesweeper PUBLIC)
+target_compile_definitions(minesweeper_rv PUBLIC RISCV)
