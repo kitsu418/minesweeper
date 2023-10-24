@@ -110,11 +110,16 @@ void sdl_fill_rectangle(int x, int y, int w, int h) {
 }
 
 void sdl_sync() {
-  for (int i = 0; i < DISPLAY_HEIGHT; i++) {
-    for (int j = 0; j < DISPLAY_WIDTH; j++) {
+  for (int i = 0; i < DISPLAY_HEIGHT / MAP_PIXEL_HEIGHT; i++) {
+    for (int j = 0; j < DISPLAY_WIDTH / MAP_PIXEL_WIDTH; j++) {
       uint32_t c = get_color(vram[idx(i, j)]);
       sdl_set_color(c);
-      EXEC(SDL_RenderDrawPoint(renderer, j, i));
+      for (int x = 0; x < MAP_PIXEL_HEIGHT; ++x) {
+        for (int y = 0; y < MAP_PIXEL_WIDTH; ++y) {
+          EXEC(SDL_RenderDrawPoint(renderer, j * MAP_PIXEL_WIDTH + y,
+                                   i * MAP_PIXEL_HEIGHT + x));
+        }
+      }
     }
   }
   SDL_RenderPresent(renderer);

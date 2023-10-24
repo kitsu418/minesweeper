@@ -1,6 +1,5 @@
 #pragma once
 #include "color.h"
-#include "display.h"
 #include <stdint.h>
 
 void graphics_init();

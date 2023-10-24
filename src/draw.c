@@ -1,5 +1,6 @@
 #include "draw.h"
 #include "color.h"
+#include "display.h"
 #include "font16x16.h"
 #include "graphics.h"
 #include "sanae.h"
@@ -107,7 +108,11 @@ void draw_board(struct Board *b) {
         break;
       }
       if (b->x == i && b->y == j) {
+#ifndef SMALL_MEMORY
         draw_cell_frame(x, y, 2, kCursorColor);
+#else
+        draw_cell_frame(x, y, 1, kCursorColor);
+#endif
       } else {
         draw_cell_frame(x, y, 1, kFrameColor);
       }
@@ -146,9 +151,11 @@ void draw_info_window(struct Board *b) {
   graphics_draw_rectangle(
       INFO_WINDOW_FRAME_TOP_MARGIN, INFO_WINDOW_FRAME_LEFT_MARGIN,
       INFO_WINDOW_FRAME_WIDTH, INFO_WINDOW_FRAME_HEIGHT, kFrameColor);
+#ifndef SMALL_MEMORY
   graphics_draw_rectangle(
       INFO_WINDOW_FRAME_TOP_MARGIN + 1, INFO_WINDOW_FRAME_LEFT_MARGIN + 1,
       INFO_WINDOW_FRAME_WIDTH - 2, INFO_WINDOW_FRAME_HEIGHT - 2, kFrameColor);
+#endif
   draw_string(INFO_WINDOW_TOP_MARGIN, INFO_WINDOW_LEFT_MARGIN, "UNLOCKED ", 9,
               kMessageColor);
   draw_number_rtol(INFO_WINDOW_TOP_MARGIN, INFO_WINDOW_NUMBER_LEFT_MARGIN,
@@ -201,9 +208,11 @@ void draw_sanae(struct Board *b) {
 void draw_exit_button() {
   graphics_draw_rectangle(EXIT_BUTTON_TOP_MARGIN, EXIT_BUTTON_LEFT_MARGIN,
                           EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT, kFrameColor);
+#ifndef SMALL_MEMORY
   graphics_draw_rectangle(EXIT_BUTTON_TOP_MARGIN + 1,
                           EXIT_BUTTON_LEFT_MARGIN + 1, EXIT_BUTTON_WIDTH - 2,
                           EXIT_BUTTON_HEIGHT - 2, kFrameColor);
+#endif
   draw_string(EXIT_CHAR_TOP_MARGIN, EXIT_CHAR_LEFT_MARGIN, "EXIT", 4,
               kMessageColor);
 }
@@ -212,9 +221,11 @@ void draw_restart_button() {
   graphics_draw_rectangle(RESTART_BUTTON_TOP_MARGIN, RESTART_BUTTON_LEFT_MARGIN,
                           RESTART_BUTTON_WIDTH, RESTART_BUTTON_HEIGHT,
                           kFrameColor);
+#ifndef SMALL_MEMORY
   graphics_draw_rectangle(
       RESTART_BUTTON_TOP_MARGIN + 1, RESTART_BUTTON_LEFT_MARGIN + 1,
       RESTART_BUTTON_WIDTH - 2, RESTART_BUTTON_HEIGHT - 2, kFrameColor);
+#endif
   draw_string(RESTART_CHAR_TOP_MARGIN, RESTART_CHAR_LEFT_MARGIN, "REMAKE", 6,
               kMessageColor);
 }
