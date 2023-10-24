@@ -65,6 +65,7 @@ target_compile_options(minesweeper_rv PUBLIC
   -flto
 )
 target_link_options(minesweeper_rv PUBLIC
+  -T ${PROJECT_SOURCE_DIR}/rv_linker.lds
   --target=riscv32-unknown-elf
   -march=rv32im
   -ffreestanding
@@ -79,3 +80,12 @@ target_link_options(minesweeper_rv PUBLIC
 
 # target_compile_definitions(minesweeper PUBLIC)
 target_compile_definitions(minesweeper_rv PUBLIC RISCV)
+
+add_custom_command(TARGET minesweeper_rv POST_BUILD
+    COMMAND llvm-objcopy ./minesweeper_rv --dump-section .text=rom.bin --dump-section .data=ram.bin
+    COMMAND od -w4 -An --endian little -v -t x4 ./rom.bin > rom.mem
+    COMMAND od -w4 -An --endian little -v -t x4 ./ram.bin > ram.mem
+    COMMAND llvm-objdump -S minesweeper_rv > tetris.asm
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    COMMENT "Generating rom and ram files..."
+)
