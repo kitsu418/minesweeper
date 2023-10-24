@@ -116,9 +116,8 @@ void draw_board(struct Board *b) {
   if (b->unlocked_num == SUCCESS) {
     draw_string_in_middle(MESSAGE_TOP_MARGIN, "YOU WIN!", 8, kMessageColor);
   } else if (b->failed) {
-    draw_string_in_middle(MESSAGE_TOP_MARGIN,
-                          "MINE TRIGGERED, PRESS R TO RESTART", 34,
-                          kMessageColor);
+    draw_string_in_middle(MESSAGE_TOP_MARGIN, "MINE TRIGGERED, RESTART PLEASE",
+                          30, kMessageColor);
   }
   clear_info_window();
   draw_info_window(b);
