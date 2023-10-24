@@ -1,5 +1,19 @@
 #include "device.h"
 
+#ifdef RISCV
+// top of stack
+extern unsigned __stacktop;
+// initial stack pointer is first address of program
+__attribute__((section(".stack"), used)) unsigned* __stack_init = &__stacktop;
+
+extern int main();
+
+__attribute__((section(".text.start"))) __attribute__((naked)) void _start() {
+  asm("mv sp, %0\n\t" ::"r"(&__stacktop));
+  asm("j %0\n\t" ::"i"(&main));
+}
+#endif
+
 void set_vram(int x, int y, uint8_t color) {
   VRAM_DATA_ADDR[x * VRAM_WIDTH + y] = color;
 }
