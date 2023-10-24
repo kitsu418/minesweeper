@@ -88,7 +88,7 @@ int main() {
       }
     }
 #endif
-    draw_board(&board);
+    draw_board(&board, x, y);
     graphics_sync();
   }
 

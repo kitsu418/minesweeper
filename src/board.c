@@ -1,8 +1,8 @@
 #include "board.h"
+#include "draw.h"
 #include "random.h"
 #include <stdbool.h>
 #include <stdint.h>
-#include "draw.h"
 
 static inline bool check_in_board(struct Board *b, int x, int y) {
   return (x < b->height && x >= 0) && (y < b->width && y >= 0);
@@ -125,12 +125,21 @@ uint8_t count_surrounding_mines(struct Board *b, int x, int y) {
 }
 
 void set_cursor(struct Board *b, uint16_t x, uint16_t y) {
-  if (x < BOARD_TOP_MARGIN || x >= (BOARD_TOP_MARGIN + b->height * CELL_HEIGHT)) {
-    return;
-  }
-  if (y < BOARD_LEFT_MARGIN || y >= (BOARD_LEFT_MARGIN + b->width * CELL_WIDTH)) {
+  if (!mouse_in_board(b, x, y)) {
     return;
   }
   b->x = (x - BOARD_TOP_MARGIN) / CELL_HEIGHT;
   b->y = (y - BOARD_LEFT_MARGIN) / CELL_WIDTH;
+}
+
+bool mouse_in_board(struct Board *b, uint16_t x, uint16_t y) {
+  if (x < BOARD_TOP_MARGIN ||
+      x >= (BOARD_TOP_MARGIN + b->height * CELL_HEIGHT)) {
+    return false;
+  }
+  if (y < BOARD_LEFT_MARGIN ||
+      y >= (BOARD_LEFT_MARGIN + b->width * CELL_WIDTH)) {
+    return false;
+  }
+  return true;
 }

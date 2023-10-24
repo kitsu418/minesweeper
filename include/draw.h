@@ -70,7 +70,7 @@ enum CellType {
   kFlag,
 };
 
-void draw_board(struct Board *b);
+void draw_board(struct Board *b, int16_t mouse_x, int16_t mouse_y);
 void draw_digit(int x, int y, int number, enum ColorType color);
 void draw_digit_segment(int x, int y, int segment, enum ColorType color);
 void draw_cell_frame(int x, int y, int w, enum ColorType color);

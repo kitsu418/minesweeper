@@ -1,4 +1,5 @@
 #include "draw.h"
+#include "board.h"
 #include "color.h"
 #include "font16x16.h"
 #include "graphics.h"
@@ -75,7 +76,7 @@ void draw_blank_cell(int x, int y, enum ColorType color) {
                           kBlankCellColor);
 }
 
-void draw_board(struct Board *b) {
+void draw_board(struct Board *b, int16_t mouse_x, int16_t mouse_y) {
   for (uint8_t i = 0; i < b->height; ++i) {
     for (uint8_t j = 0; j < b->width; ++j) {
       int x = BOARD_TOP_MARGIN + i * CELL_HEIGHT;
@@ -106,7 +107,7 @@ void draw_board(struct Board *b) {
         draw_mine(x, y);
         break;
       }
-      if (b->x == i && b->y == j) {
+      if (b->x == i && b->y == j && mouse_in_board(b, mouse_x, mouse_y)) {
         draw_cell_frame(x, y, 2, kCursorColor);
       } else {
         draw_cell_frame(x, y, 1, kFrameColor);
