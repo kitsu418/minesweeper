@@ -1,4 +1,5 @@
 #include "device.h"
+#include "display.h"
 
 extern unsigned __stacktop;
 // initial stack pointer is first address of program
@@ -12,7 +13,7 @@ __attribute__((section(".text.start"))) __attribute__((naked)) void _start() {
 }
 
 void set_vram(int x, int y, uint8_t color) {
-  VRAM_DATA_ADDR[x * VRAM_WIDTH + y] = color;
+  VRAM_DATA_ADDR[x * VRAM_WIDTH / MAP_PIXEL_WIDTH + y] = color;
 }
 
 void commit_vram() { *VRAM_COMMIT_ADDR = 1; }

@@ -75,6 +75,7 @@ target_link_options(minesweeper_rv PUBLIC
   -fno-PIE
   -G=0
   -Oz
+  -g
   -flto
 )
 

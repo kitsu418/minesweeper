@@ -9,8 +9,10 @@
 
 // As for VGA monitors, all I need to do is to write data of each pixel into
 // vram, then commit it.
-#define VRAM_DATA_ADDR ((volatile uint8_t *)0xdeadbeec)
-#define VRAM_COMMIT_ADDR ((volatile bool *)0xdeadbeed)
+// #define VRAM_DATA_ADDR ((volatile uint8_t *)0xdeadbeec)
+// #define VRAM_COMMIT_ADDR ((volatile bool *)0xdeadbeed)
+#define VRAM_DATA_ADDR ((volatile uint8_t *)0xdeadbef5)
+#define VRAM_COMMIT_ADDR ((volatile bool *)0xdeadbef4)
 #define VRAM_WIDTH DISPLAY_WIDTH
 #define VRAM_HEIGHT DISPLAY_HEIGHT
 
