@@ -1,4 +1,5 @@
 #include "draw.h"
+#include "board.h"
 #include "color.h"
 #include "display.h"
 #include "font16x16.h"
@@ -72,8 +73,31 @@ void draw_mine(int x, int y) {
 }
 
 void draw_blank_cell(int x, int y, enum ColorType color) {
+#ifndef SMALL_MEMORY
   graphics_fill_rectangle(x + 1, y + 1, CELL_WIDTH - 2, CELL_HEIGHT - 2,
                           kBlankCellColor);
+#else
+  graphics_fill_rectangle(x + 2, y + 2, CELL_WIDTH - 4, CELL_HEIGHT - 4,
+                          kBlankCellColor);
+#endif
+}
+
+void draw_init(struct Board *b) {
+  draw_title(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN, kTitleColor);
+  draw_sanae(b);
+  draw_exit_button();
+  draw_restart_button();
+
+  for (uint8_t i = 0; i < b->height; ++i) {
+    for (uint8_t j = 0; j < b->width; ++j) {
+      int x = BOARD_TOP_MARGIN + i * CELL_HEIGHT;
+      int y = BOARD_LEFT_MARGIN + j * CELL_WIDTH;
+      draw_cell_background(x, y, kUnopenedBackgroundColor);
+      draw_cell_frame(x, y, 1, kFrameColor);
+    }
+  }
+  draw_info_window(b);
+  graphics_sync();
 }
 
 void draw_board(struct Board *b) {
@@ -81,40 +105,8 @@ void draw_board(struct Board *b) {
     for (uint8_t j = 0; j < b->width; ++j) {
       int x = BOARD_TOP_MARGIN + i * CELL_HEIGHT;
       int y = BOARD_LEFT_MARGIN + j * CELL_WIDTH;
-      switch (b->state[i][j]) {
-      case kUnopen:
-        draw_cell_background(x, y, kUnopenedBackgroundColor);
-        if (b->god_mode) {
-          if (b->mine[i][j]) {
-            draw_mine(x, y);
-          }
-        }
-        break;
-      case kNumbered:
-        draw_cell_background(x, y, kOpenedBackgroundColor);
-        draw_digit(x, y, b->number[i][j], kCharacterColor);
-        break;
-      case kBlank:
-        draw_cell_background(x, y, kOpenedBackgroundColor);
-        draw_blank_cell(x, y, kBlankCellColor);
-        break;
-      case kFlagged:
-        draw_cell_background(x, y, kUnopenedBackgroundColor);
-        draw_flag(x, y);
-        break;
-      case kMine:
-        draw_cell_background(x, y, kBoomCellBackgroundColor);
+      if (b->state[i][j] == kUnopen && b->god_mode && b->mine[i][j]) {
         draw_mine(x, y);
-        break;
-      }
-      if (b->x == i && b->y == j) {
-#ifndef SMALL_MEMORY
-        draw_cell_frame(x, y, 2, kCursorColor);
-#else
-        draw_cell_frame(x, y, 1, kCursorColor);
-#endif
-      } else {
-        draw_cell_frame(x, y, 1, kFrameColor);
       }
     }
   }
@@ -228,4 +220,25 @@ void draw_restart_button() {
 #endif
   draw_string(RESTART_CHAR_TOP_MARGIN, RESTART_CHAR_LEFT_MARGIN, "REMAKE", 6,
               kMessageColor);
+}
+
+void draw_cursor(struct Board *b, uint16_t x, uint16_t y) {
+#ifndef SMALL_MEMORY
+  draw_cell_frame(BOARD_TOP_MARGIN + b->x * CELL_HEIGHT,
+                  BOARD_LEFT_MARGIN + b->y * CELL_WIDTH, 1, kFrameColor);
+  graphics_draw_rectangle(BOARD_TOP_MARGIN + b->x * CELL_HEIGHT + 1,
+                          BOARD_LEFT_MARGIN + b->y * CELL_WIDTH + 1,
+                          CELL_WIDTH - 2, CELL_HEIGHT - 2, kBackgroundColor);
+#else
+  draw_cell_frame(BOARD_TOP_MARGIN + b->x * CELL_HEIGHT,
+                  BOARD_LEFT_MARGIN + b->y * CELL_WIDTH, 1, kFrameColor);
+#endif
+  set_cursor(b, x, y);
+#ifndef SMALL_MEMORY
+  draw_cell_frame(BOARD_TOP_MARGIN + b->x * CELL_HEIGHT,
+                  BOARD_LEFT_MARGIN + b->y * CELL_WIDTH, 2, kCursorColor);
+#else
+  draw_cell_frame(BOARD_TOP_MARGIN + b->x * CELL_HEIGHT,
+                  BOARD_LEFT_MARGIN + b->y * CELL_WIDTH, 1, kCursorColor);
+#endif
 }

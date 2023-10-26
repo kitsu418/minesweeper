@@ -1,8 +1,9 @@
 #include "board.h"
+#include "color.h"
+#include "draw.h"
 #include "random.h"
 #include <stdbool.h>
 #include <stdint.h>
-#include "draw.h"
 
 static inline bool check_in_board(struct Board *b, int x, int y) {
   return (x < b->height && x >= 0) && (y < b->width && y >= 0);
@@ -11,6 +12,8 @@ static inline bool check_in_board(struct Board *b, int x, int y) {
 void init_board(struct Board *b) {
   b->height = BOARD_HEIGHT;
   b->width = BOARD_WIDTH;
+  b->x = 0;
+  b->y = 0;
   clear_board(b);
 }
 
@@ -27,8 +30,6 @@ void clear_board(struct Board *b) {
       b->mine[i][j] = false;
     }
   }
-  b->x = 0;
-  b->y = 0;
 }
 
 void generate_mine(struct Board *b, int mine_num) {
@@ -58,12 +59,17 @@ void first_click_with_mine(struct Board *b, int x, int y) {
 }
 
 void flag_cell(struct Board *b) {
+  int x = BOARD_TOP_MARGIN + b->x * CELL_HEIGHT;
+  int y = BOARD_LEFT_MARGIN + b->y * CELL_WIDTH;
   if (b->state[b->x][b->y] == kUnopen) {
     b->state[b->x][b->y] = kFlagged;
     ++b->flagged_num;
+    draw_cell_background(x, y, kUnopenedBackgroundColor);
+    draw_flag(x, y);
   } else if (b->state[b->x][b->y] == kFlagged) {
     b->state[b->x][b->y] = kUnopen;
     --b->flagged_num;
+    draw_cell_background(x, y, kUnopenedBackgroundColor);
   }
 }
 
@@ -77,9 +83,13 @@ void click_cell(struct Board *b) {
   } else {
     if (b->state[b->x][b->y] == kUnopen || b->state[b->x][b->y] == kFlagged) {
       if (b->mine[b->x][b->y] == true) {
+        int x = BOARD_TOP_MARGIN + b->x * CELL_HEIGHT;
+        int y = BOARD_LEFT_MARGIN + b->y * CELL_WIDTH;
         b->state[b->x][b->y] = kMine;
         b->failed = true;
         b->god_mode = true;
+        draw_cell_background(x, y, kBoomCellBackgroundColor);
+        draw_mine(x, y);
       } else {
         uncover_cell(b, b->x, b->y);
       }
@@ -97,16 +107,22 @@ void uncover_cell(struct Board *b, int x, int y) {
   if (b->mine[x][y] == true) {
     return;
   } else {
+    int xx = BOARD_TOP_MARGIN + x * CELL_HEIGHT;
+    int yy = BOARD_LEFT_MARGIN + y * CELL_WIDTH;
+    draw_cell_background(xx, yy, kOpenedBackgroundColor);
+    draw_cell_frame(xx, yy, 1, kFrameColor);
     ++b->unlocked_num;
     b->number[x][y] = count_surrounding_mines(b, x, y);
     if (b->number[x][y] == 0) {
       b->state[x][y] = kBlank;
+      draw_blank_cell(xx, yy, kBlankCellColor);
       uncover_cell(b, x + 1, y);
       uncover_cell(b, x, y + 1);
       uncover_cell(b, x - 1, y);
       uncover_cell(b, x, y - 1);
     } else {
       b->state[x][y] = kNumbered;
+      draw_digit(xx, yy, b->number[x][y], kCharacterColor);
     }
   }
 }
@@ -125,12 +141,40 @@ uint8_t count_surrounding_mines(struct Board *b, int x, int y) {
 }
 
 void set_cursor(struct Board *b, uint16_t x, uint16_t y) {
-  if (x < BOARD_TOP_MARGIN || x >= (BOARD_TOP_MARGIN + b->height * CELL_HEIGHT)) {
+  if (x < BOARD_TOP_MARGIN ||
+      x >= (BOARD_TOP_MARGIN + b->height * CELL_HEIGHT)) {
     return;
   }
-  if (y < BOARD_LEFT_MARGIN || y >= (BOARD_LEFT_MARGIN + b->width * CELL_WIDTH)) {
+  if (y < BOARD_LEFT_MARGIN ||
+      y >= (BOARD_LEFT_MARGIN + b->width * CELL_WIDTH)) {
     return;
   }
   b->x = (x - BOARD_TOP_MARGIN) / CELL_HEIGHT;
   b->y = (y - BOARD_LEFT_MARGIN) / CELL_WIDTH;
+}
+
+void god_mode(struct Board *b) {
+  if (b->god_mode) {
+    for (uint8_t i = 0; i < b->height; ++i) {
+      for (uint8_t j = 0; j < b->width; ++j) {
+        int x = BOARD_TOP_MARGIN + i * CELL_HEIGHT;
+        int y = BOARD_LEFT_MARGIN + j * CELL_WIDTH;
+        if (b->state[i][j] == kUnopen && b->mine[i][j]) {
+          draw_cell_background(x, y, kUnopenedBackgroundColor);
+          draw_cell_frame(x, y, 1, kFrameColor);
+        }
+      }
+    }
+  } else {
+    for (uint8_t i = 0; i < b->height; ++i) {
+      for (uint8_t j = 0; j < b->width; ++j) {
+        int x = BOARD_TOP_MARGIN + i * CELL_HEIGHT;
+        int y = BOARD_LEFT_MARGIN + j * CELL_WIDTH;
+        if (b->state[i][j] == kUnopen && b->mine[i][j]) {
+          draw_mine(x, y);
+        }
+      }
+    }
+  }
+  b->god_mode ^= 1;
 }

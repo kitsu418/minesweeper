@@ -79,8 +79,8 @@ target_link_options(minesweeper_rv PUBLIC
   -flto
 )
 
-# target_compile_definitions(minesweeper PUBLIC)
-target_compile_definitions(minesweeper_rv PUBLIC RISCV)
+target_compile_definitions(minesweeper PUBLIC )
+target_compile_definitions(minesweeper_rv PUBLIC RISCV SMALL_MEMORY)
 
 add_custom_command(TARGET minesweeper_rv POST_BUILD
     COMMAND llvm-objcopy ./minesweeper_rv --dump-section .text=rom.bin --dump-section .data=ram.bin

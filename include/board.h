@@ -41,3 +41,4 @@ void click_cell(struct Board *b);
 void uncover_cell(struct Board *b, int x, int y);
 uint8_t count_surrounding_mines(struct Board *b, int x, int y);
 void set_cursor(struct Board *b, uint16_t x, uint16_t y);
+void god_mode(struct Board *b);
