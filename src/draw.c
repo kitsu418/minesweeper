@@ -77,6 +77,15 @@ void draw_blank_cell(int x, int y, enum ColorType color) {
 }
 
 void draw_board(struct Board *b, int16_t mouse_x, int16_t mouse_y) {
+  for (int i = 0; i < DISPLAY_HEIGHT; ++i) {
+    for (int j = 0; j < DISPLAY_WIDTH; ++j) {
+      graphics_draw_pixel(i, j, kBackgroundColor);
+    }
+  }
+  draw_title(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN, kTitleColor);
+  draw_sanae(b);
+  draw_exit_button();
+  draw_restart_button();
   for (uint8_t i = 0; i < b->height; ++i) {
     for (uint8_t j = 0; j < b->width; ++j) {
       int x = BOARD_TOP_MARGIN + i * CELL_HEIGHT;

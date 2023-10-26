@@ -20,10 +20,6 @@ int main() {
   generate_mine(&board, MINE_NUM);
 
   graphics_init();
-  draw_title(TITLE_TOP_MARGIN, TITLE_LEFT_MARGIN, kTitleColor);
-  draw_sanae(&board);
-  draw_exit_button();
-  draw_restart_button();
 
   bool alive = true;
   uint16_t x = 0;
