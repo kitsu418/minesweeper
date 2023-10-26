@@ -24,6 +24,7 @@ int main() {
   draw_sanae(&board);
   draw_exit_button();
   draw_restart_button();
+  graphics_sync();
 
   bool alive = true;
   uint16_t x = 0;
