@@ -49,9 +49,11 @@ int main() {
         } else if (board.failed == false && board.unlocked_num < SUCCESS) {
           if (event.button.button == SDL_BUTTON_LEFT) {
             click_cell(&board);
+            draw_info_window_numbers(&board);
           }
           if (event.button.button == SDL_BUTTON_RIGHT) {
             flag_cell(&board);
+            draw_info_window_numbers(&board);
           }
           if (event.button.button == SDL_BUTTON_MIDDLE) {
             god_mode(&board);
@@ -77,15 +79,20 @@ int main() {
       } else if (board.failed == false && board.unlocked_num < SUCCESS) {
         if (lb) {
           click_cell(&board);
+          draw_info_window_numbers(&board);
         }
         if (rb) {
           flag_cell(&board);
+          draw_info_window_numbers(&board);
         }
         if (mb) {
           god_mode(&board);
         }
       }
     }
+    // for (int i = 0; i < 320 * 240; ++i) {
+    //   VRAM_DATA_ADDR[i] = i % 4;
+    // }
 #endif
     draw_board(&board);
     graphics_sync();

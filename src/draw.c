@@ -97,6 +97,7 @@ void draw_init(struct Board *b) {
     }
   }
   draw_info_window(b);
+  draw_info_window_numbers(b);
   graphics_sync();
 }
 
@@ -117,8 +118,8 @@ void draw_board(struct Board *b) {
                           "MINE TRIGGERED, PRESS R TO RESTART", 34,
                           kMessageColor);
   }
-  clear_info_window();
-  draw_info_window(b);
+  // clear_info_window();
+  // draw_info_window(b);
 }
 
 inline static void draw_number_rtol(int x, int y, int num,
@@ -150,16 +151,49 @@ void draw_info_window(struct Board *b) {
 #endif
   draw_string(INFO_WINDOW_TOP_MARGIN, INFO_WINDOW_LEFT_MARGIN, "UNLOCKED ", 9,
               kMessageColor);
-  draw_number_rtol(INFO_WINDOW_TOP_MARGIN, INFO_WINDOW_NUMBER_LEFT_MARGIN,
-                   b->unlocked_num, kMessageColor);
   draw_string(INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT + INFO_WINDOW_ROW_SPACING,
               INFO_WINDOW_LEFT_MARGIN, "FLAGGED  ", 9, kMessageColor);
-  draw_number_rtol(
-      INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT + INFO_WINDOW_ROW_SPACING,
-      INFO_WINDOW_NUMBER_LEFT_MARGIN, b->flagged_num, kMessageColor);
   draw_string(INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT * 2 +
                   INFO_WINDOW_ROW_SPACING * 2,
               INFO_WINDOW_LEFT_MARGIN, "REMAINING", 9, kMessageColor);
+}
+
+void clear_info_window_all_num() {
+  for (int i = INFO_WINDOW_TOP_MARGIN; i < INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT;
+       ++i) {
+    for (int j = INFO_WINDOW_NUMBER_LEFT_MARGIN - 2 * CHAR_WIDTH;
+         j < INFO_WINDOW_NUMBER_LEFT_MARGIN + CHAR_WIDTH; ++j) {
+      graphics_draw_pixel(i, j, kBackgroundColor);
+    }
+  }
+  for (int i = INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT + INFO_WINDOW_ROW_SPACING;
+       i < INFO_WINDOW_TOP_MARGIN + 2 * CHAR_HEIGHT + INFO_WINDOW_ROW_SPACING;
+       ++i) {
+    for (int j = INFO_WINDOW_NUMBER_LEFT_MARGIN - 2 * CHAR_WIDTH;
+         j < INFO_WINDOW_NUMBER_LEFT_MARGIN + CHAR_WIDTH; ++j) {
+      graphics_draw_pixel(i, j, kBackgroundColor);
+    }
+  }
+  for (int i = INFO_WINDOW_TOP_MARGIN + 2 * CHAR_HEIGHT + 2 * INFO_WINDOW_ROW_SPACING;
+       i < INFO_WINDOW_TOP_MARGIN + 3 * CHAR_HEIGHT + 2 * INFO_WINDOW_ROW_SPACING;
+       ++i) {
+    for (int j = INFO_WINDOW_NUMBER_LEFT_MARGIN - 2 * CHAR_WIDTH;
+         j < INFO_WINDOW_NUMBER_LEFT_MARGIN + CHAR_WIDTH; ++j) {
+      graphics_draw_pixel(i, j, kBackgroundColor);
+    }
+  }
+}
+
+void draw_info_window_numbers(struct Board *b) {
+  clear_info_window_all_num();
+  // unlocked
+  draw_number_rtol(INFO_WINDOW_TOP_MARGIN, INFO_WINDOW_NUMBER_LEFT_MARGIN,
+                   b->unlocked_num, kMessageColor);
+  // flagged
+  draw_number_rtol(
+      INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT + INFO_WINDOW_ROW_SPACING,
+      INFO_WINDOW_NUMBER_LEFT_MARGIN, b->flagged_num, kMessageColor);
+  // remaining
   draw_number_rtol(
       INFO_WINDOW_TOP_MARGIN + CHAR_HEIGHT * 2 + INFO_WINDOW_ROW_SPACING * 2,
       INFO_WINDOW_NUMBER_LEFT_MARGIN, MINE_NUM - b->flagged_num, kMessageColor);

@@ -71,6 +71,7 @@ void draw_mine(int x, int y);
 void draw_blank_cell(int x, int y, enum ColorType color);
 void clear_message();
 void draw_info_window(struct Board *b);
+void draw_info_window_numbers(struct Board *b);
 void clear_info_window();
 void draw_sanae(struct Board *b);
 void draw_exit_button();
