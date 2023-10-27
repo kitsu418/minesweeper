@@ -256,6 +256,29 @@ void draw_restart_button() {
               kMessageColor);
 }
 
+void draw_exit_button_margin(uint8_t choosed) {
+  uint8_t color = choosed ? kCursorColor : kFrameColor;
+  graphics_draw_rectangle(EXIT_BUTTON_TOP_MARGIN, EXIT_BUTTON_LEFT_MARGIN,
+                          EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT, color);
+#ifndef SMALL_MEMORY
+  graphics_draw_rectangle(EXIT_BUTTON_TOP_MARGIN + 1,
+                          EXIT_BUTTON_LEFT_MARGIN + 1, EXIT_BUTTON_WIDTH - 2,
+                          EXIT_BUTTON_HEIGHT - 2, color);
+#endif
+}
+
+void draw_restart_button_margin(uint8_t choosed) {
+  uint8_t color = choosed ? kCursorColor : kFrameColor;
+    graphics_draw_rectangle(RESTART_BUTTON_TOP_MARGIN, RESTART_BUTTON_LEFT_MARGIN,
+                          RESTART_BUTTON_WIDTH, RESTART_BUTTON_HEIGHT,
+                          color);
+#ifndef SMALL_MEMORY
+  graphics_draw_rectangle(
+      RESTART_BUTTON_TOP_MARGIN + 1, RESTART_BUTTON_LEFT_MARGIN + 1,
+      RESTART_BUTTON_WIDTH - 2, RESTART_BUTTON_HEIGHT - 2, color);
+#endif
+}
+
 void draw_cursor(struct Board *b, uint16_t x, uint16_t y) {
 #ifndef SMALL_MEMORY
   draw_cell_frame(BOARD_TOP_MARGIN + b->x * CELL_HEIGHT,

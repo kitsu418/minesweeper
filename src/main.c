@@ -38,6 +38,12 @@ int main() {
         x = event.motion.y;
         y = event.motion.x;
         draw_cursor(&board, x, y);
+
+        // draw restart/exit button when choosed
+        // just use exit_button_activated() and restart_button_activated()
+        draw_exit_button_margin(exit_button_activated(x, y));
+        draw_restart_button_margin(restart_button_activated(x, y));
+        
       } else if (event.type == SDL_MOUSEBUTTONDOWN) {
         if (exit_button_activated(x, y)) {
           alive = false;
@@ -68,6 +74,13 @@ int main() {
     mb = mouse_middle_button_pressed();
     rb = mouse_right_button_pressed();
     draw_cursor(&board, x, y);
+
+    // draw restart/exit button when choosed
+    // just use exit_button_activated() and restart_button_activated()
+    draw_exit_button_margin(exit_button_activated(x, y));
+    draw_restart_button_margin(restart_button_activated(x, y));
+
+
     if (lb || mb || rb) {
       if (exit_button_activated(x, y)) {
         alive = false;

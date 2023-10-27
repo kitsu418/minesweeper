@@ -76,5 +76,7 @@ void clear_info_window();
 void draw_sanae(struct Board *b);
 void draw_exit_button();
 void draw_restart_button();
+void draw_exit_button_margin(uint8_t choosed);
+void draw_restart_button_margin(uint8_t choosed);
 void draw_init(struct Board *b);
 void draw_cursor(struct Board *b, uint16_t x, uint16_t y);
